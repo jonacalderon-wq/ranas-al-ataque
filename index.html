@@ -733,7 +733,17 @@ pintarSonido();
   } catch(e){}
 })();
 if (progreso.nombre && navigator.onLine !== false) conectarRed();
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  // Busca versiones nuevas cada vez que se abre; si llega una, recarga (sin cortar una partida)
+  const habia = !!navigator.serviceWorker.controller;
+  let recargado = false;
+  navigator.serviceWorker.register('sw.js', { updateViaCache:'none' }).then(r => r.update()).catch(() => {});
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!habia || recargado) return;
+    if (S.fin || !S.modo) { recargado = true; location.reload(); }
+    else aviso('Hay una versión nueva del juego. Se verá al terminar esta partida.', 4000);
+  });
+}
 </script>
 </body>
 </html>
