@@ -3,60 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Captura la Bandera</title>
-<meta name="theme-color" content="#2b6b3a">
+<title>Damas</title>
+<meta name="theme-color" content="#5a3418">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 30% 15%,#5fb35a,#2b6b3a 75%);color:#fff;overflow:hidden;user-select:none;-webkit-user-select:none}
+body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 30% 15%,#8a5a34,#3e2210 75%);color:#fff;overflow:hidden;user-select:none;-webkit-user-select:none}
 #app{height:100%;max-width:560px;margin:0 auto;position:relative}
 .pantalla{display:none;height:100%;flex-direction:column;align-items:center;padding:16px;padding-top:max(16px,env(safe-area-inset-top));overflow-y:auto}
 .pantalla.activa{display:flex}
 #menu{justify-content:center;gap:14px}
-h1{font-size:2.3rem;text-shadow:0 4px 0 #1b4524;text-align:center;line-height:1.1}
-h2.cab{font-size:1.3rem;text-shadow:0 3px 0 #1b4524;flex:1;text-align:center}
+h1{font-size:2.6rem;text-shadow:0 4px 0 #2a1608;text-align:center;line-height:1.1}
+h2.cab{font-size:1.3rem;text-shadow:0 3px 0 #2a1608;flex:1;text-align:center}
 .sub{opacity:.95;margin-bottom:8px;text-align:center}
-.logo{font-size:5rem;animation:flota 3s ease-in-out infinite;line-height:1}
-@keyframes flota{50%{transform:translateY(-8px) rotate(-4deg)}}
+.logo{display:flex;gap:10px;margin-bottom:4px}
+.logo .ficha{position:relative;width:64px;height:64px;inset:auto;animation:flota 3s ease-in-out infinite}
+.logo .ficha:nth-child(2){animation-delay:.5s}
+@keyframes flota{50%{transform:translateY(-8px)}}
 .btn{font:inherit;font-weight:bold;border:none;border-radius:18px;padding:12px 18px;background:#3d8fe0;color:#fff;box-shadow:0 5px 0 #1f5a99;cursor:pointer;font-size:1.05rem}
 .btn:active{transform:translateY(4px);box-shadow:none}
 .btn.grande{width:min(320px,90%);font-size:1.25rem;padding:15px}
-.btn.rojo{background:#e0523d;box-shadow:0 5px 0 #8f2a1c}
+.btn.rojo{background:#d9442e;box-shadow:0 5px 0 #8f2a1c}
 .btn.verde{background:#3cb043;box-shadow:0 5px 0 #237027}
 .btn.naranja{background:#f08a2c;box-shadow:0 5px 0 #a3530f}
-.btn.morado{background:#9a5ad8;box-shadow:0 5px 0 #5b2a85}
 .btn.gris{background:#6b7f86;box-shadow:0 5px 0 #3e4d52}
 .btn.chico{font-size:.95rem;padding:8px 14px;background:rgba(255,255,255,.2);box-shadow:none}
 .btn.icono{width:46px;height:46px;padding:0;font-size:1.4rem;background:rgba(255,255,255,.2);box-shadow:none;flex:none}
-.btn:disabled{opacity:.45}
+.btn:disabled{opacity:.4}
 .barra{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px}
-/* Niveles */
-.rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;margin:16px 0}
-.nivel{aspect-ratio:1;border-radius:20px;background:#3d8fe0;box-shadow:0 5px 0 #1f5a99;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;font-weight:bold;border:none;color:#fff;font-family:inherit;gap:2px}
-.nivel:active{transform:translateY(4px);box-shadow:none}
-.nivel small{font-size:.75rem;letter-spacing:1px}
-.nivel.bloq{background:#55707a;box-shadow:0 5px 0 #33464c}
-.nivel.jefe{background:#e0523d;box-shadow:0 5px 0 #8f2a1c}
-.total{background:rgba(0,0,0,.2);padding:6px 12px;border-radius:14px;font-weight:bold;white-space:nowrap}
-/* Ayuda y En línea */
-.tarjeta{background:rgba(0,0,0,.16);border-radius:18px;padding:14px;width:100%;margin-top:12px;line-height:1.45}
-.tarjeta b{color:#ffe66b}
-.tarjeta h3{margin-bottom:6px}
+.tarjeta{background:rgba(0,0,0,.2);border-radius:18px;padding:14px;width:100%;margin-top:12px;line-height:1.45}
+.tarjeta b{color:#ffd86b}
+.tarjeta h3{margin-bottom:8px}
 .paso{display:flex;gap:10px;align-items:flex-start}
-.paso .num{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:#2b6b3a;font-weight:bold;display:flex;align-items:center;justify-content:center}
-.animales{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
-.animales div{background:rgba(255,255,255,.15);border-radius:12px;padding:6px;text-align:center;font-size:.85rem}
-.animales span{font-size:1.8rem;display:block}
-.codigo{font-size:2.2rem;font-weight:bold;letter-spacing:5px;background:#fffdf3;color:#2b6b3a;border-radius:14px;padding:6px 10px;text-align:center;margin:8px 0;user-select:text;-webkit-user-select:text}
+.paso .num{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:#5a3418;font-weight:bold;display:flex;align-items:center;justify-content:center}
+/* Elegir nivel */
+.opciones{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opcion{font:inherit;border:3px solid transparent;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;padding:12px 8px;text-align:center;cursor:pointer}
+.opcion .e{font-size:2rem;display:block}
+.opcion b{display:block;font-size:1.05rem;color:#fff}
+.opcion small{opacity:.85;font-size:.78rem}
+.opcion.activa{border-color:#ffd86b;background:rgba(255,216,107,.22)}
+.colores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.colores .opcion .ficha{position:relative;inset:auto;width:38px;height:38px;margin:0 auto 4px}
+/* En línea */
+.codigo{font-size:2.2rem;font-weight:bold;letter-spacing:5px;background:#fffdf3;color:#5a3418;border-radius:14px;padding:6px 10px;text-align:center;margin:8px 0;user-select:text;-webkit-user-select:text}
 .fila{display:flex;gap:8px;width:100%;align-items:center}
-input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-radius:14px;padding:12px;background:#fffdf3;color:#21413f}
-.estado{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;background:rgba(0,0,0,.2);border-radius:12px;padding:4px 10px;white-space:nowrap}
+input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-radius:14px;padding:12px;background:#fffdf3;color:#3e2210}
+.estado{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;background:rgba(0,0,0,.25);border-radius:12px;padding:4px 10px;white-space:nowrap}
 .punto{width:10px;height:10px;border-radius:50%;background:#aaa}
 .punto.listo{background:#5df05d}.punto.conectando{background:#ffd84a}.punto.error{background:#ff6b6b}
-.amigo{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.18);border-radius:14px;padding:8px 10px;margin-top:8px}
+.amigo{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2);border-radius:14px;padding:8px 10px;margin-top:8px}
 .amigo .info{flex:1;min-width:0}
 .amigo .info b{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .amigo .info small{opacity:.8;letter-spacing:2px}
@@ -64,69 +63,44 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
 /* Juego */
 #juego{padding:8px 10px;gap:7px;padding-top:max(8px,env(safe-area-inset-top))}
 #titulo{font-weight:bold;font-size:1.05rem;text-align:center;flex:1}
-.marcador{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px}
-.equipo{flex:1;display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:14px;border:3px solid transparent;transition:.3s;min-width:0}
-.equipo.e1{background:rgba(61,143,224,.55)}.equipo.e2{background:rgba(224,82,61,.55);justify-content:flex-end}
-.equipo.activo{border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.6)}
-.equipo b{font-size:1.3rem}
-.equipo small{font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#guia{width:100%;background:#fffdf3;color:#21413f;border-radius:14px;padding:8px 12px;font-weight:bold;text-align:center;font-size:.95rem;min-height:2.6em;display:flex;align-items:center;justify-content:center}
-#tablero{display:grid;gap:3px;background:#7a5a33;padding:5px;border-radius:14px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
-.celda{position:relative;aspect-ratio:1;border-radius:8px;background:#8fd16f;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.celda:nth-child(odd){background:#84c866}
-.celda.lago{background:linear-gradient(135deg,#4fb3e8,#2a86c4)!important;font-size:1.2rem}
-.celda.mizona{box-shadow:inset 0 0 0 3px rgba(255,255,255,.65)}
-.pieza{position:absolute;inset:7%;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 rgba(0,0,0,.3);z-index:1}
-.pieza.l1{background:linear-gradient(#5aa5ee,#2f7bc8)}
-.pieza.l2{background:linear-gradient(#ef6f5b,#c43c28)}
-.pieza .emo{font-size:min(7vw,1.9rem);line-height:1}
-.pieza.oculta .emo{font-size:min(7vw,1.8rem);font-weight:bold;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.3)}
-.pieza b{position:absolute;right:-3px;bottom:-4px;background:#fff;color:#222;border-radius:50%;width:1.35em;height:1.35em;font-size:.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.4)}
-.pieza .ojo{position:absolute;left:-3px;top:-4px;font-size:.7rem;background:#ffe66b;border-radius:50%;width:1.4em;height:1.4em;display:flex;align-items:center;justify-content:center}
-.celda.sel .pieza{animation:brinca .6s ease-in-out infinite;box-shadow:0 0 0 3px #ffe66b,0 3px 0 rgba(0,0,0,.3)}
-@keyframes brinca{50%{transform:translateY(-8%) scale(1.07)}}
-.celda.obj::after{content:"";position:absolute;width:32%;height:32%;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 3px #3d8fe0;z-index:2;pointer-events:none}
-.celda.ataque::after{content:"⚔️";position:absolute;z-index:3;font-size:1.1rem;width:62%;height:62%;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:latido .8s infinite}
-.celda.ataque.gana::after{background:rgba(60,176,67,.9);box-shadow:0 0 0 3px #fff}
-.celda.ataque.pierde::after{background:rgba(224,60,40,.9);box-shadow:0 0 0 3px #fff}
-.celda.ataque.empate::after,.celda.ataque.duda::after{background:rgba(245,190,40,.95);box-shadow:0 0 0 3px #fff}
-@keyframes latido{50%{transform:scale(1.12)}}
-.celda.ultimo{box-shadow:inset 0 0 0 3px #ffe66b}
-.celda.cambio .pieza{box-shadow:0 0 0 3px #ffe66b}
-.leyenda{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;font-size:.85rem;background:rgba(0,0,0,.18);border-radius:12px;padding:6px 8px}
-.leyenda span{white-space:nowrap}
+.jugador{width:100%;display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:14px;background:rgba(0,0,0,.22);border:3px solid transparent;transition:.3s}
+.jugador.activo{border-color:#ffd86b;box-shadow:0 0 12px rgba(255,216,107,.5)}
+.jugador .ficha{position:relative;inset:auto;width:30px;height:30px;flex:none}
+.jugador .nom{flex:1;font-weight:bold;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jugador .cuenta{font-size:.9rem;opacity:.9}
+.reloj{font-weight:bold;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.15);border-radius:10px;padding:3px 8px;min-width:62px;text-align:center}
+.reloj.poco{background:#d9442e;animation:latido .5s infinite}
+@keyframes latido{50%{transform:scale(1.1)}}
+#guia{width:100%;background:#fffdf3;color:#3e2210;border-radius:14px;padding:7px 12px;font-weight:bold;text-align:center;font-size:.95rem;min-height:2.4em;display:flex;align-items:center;justify-content:center}
+#tablero{display:grid;grid-template-columns:repeat(8,1fr);border:8px solid #5a3418;border-radius:10px;box-shadow:0 8px 0 rgba(0,0,0,.3);width:min(100%,calc(100vh - 300px));touch-action:manipulation}
+.casilla{position:relative;aspect-ratio:1;background:#f3dfb5}
+.casilla.oscura{background:#a86b3c;cursor:pointer}
+.casilla.ultimo{background:#c9924f}
+.casilla.paso{background:#b98048}
+.ficha{position:absolute;inset:9%;border-radius:50%;z-index:1;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.ficha::after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(0,0,0,.12)}
+.ficha.b{background:radial-gradient(circle at 35% 30%,#fffdf6,#efe3c8 60%,#d2c09a);box-shadow:0 4px 0 #9c8458}
+.ficha.r{background:radial-gradient(circle at 35% 30%,#f07a62,#c73a24 60%,#8d2213);box-shadow:0 4px 0 #5a140a}
+.ficha .corona{font-size:min(5.5vw,1.45rem);z-index:2;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+.casilla.sel .ficha{transform:translateY(-8%) scale(1.08);box-shadow:0 0 0 3px #ffd86b,0 6px 0 rgba(0,0,0,.35)}
+.casilla.debe .ficha{animation:brillo 1s infinite}
+@keyframes brillo{50%{box-shadow:0 0 0 4px #ffd86b,0 0 16px #ffd86b}}
+.casilla.destino::after{content:"";position:absolute;left:34%;top:34%;width:32%;height:32%;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 0 0 3px #3cb043;z-index:3;pointer-events:none}
+.casilla.destino.come::after{background:#ffd86b;box-shadow:0 0 0 3px #d9442e}
+.ficha.comida{opacity:.35;transform:scale(.8)}
+.pop{animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.5);opacity:.4}}
 .acciones{display:flex;gap:10px}
-/* Batalla */
-#batalla{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:35;padding:20px}
-#batalla.oculto{display:none}
-.bat{background:#fffdf3;color:#21413f;border-radius:24px;padding:20px;text-align:center;width:min(360px,100%);animation:pop .3s}
-.duelo{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px 0 12px}
-.carta{width:92px;height:110px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:bold;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:.4s}
-.carta.l1{background:linear-gradient(#5aa5ee,#2f7bc8)}.carta.l2{background:linear-gradient(#ef6f5b,#c43c28)}
-.carta span{font-size:2.8rem;line-height:1.1}
-.carta small{font-size:.85rem}
-.carta.izq{animation:chocaI .5s ease}.carta.der{animation:chocaD .5s ease}
-@keyframes chocaI{50%{transform:translateX(18px) rotate(8deg)}}
-@keyframes chocaD{50%{transform:translateX(-18px) rotate(-8deg)}}
-.carta.cae{transform:scale(.6) rotate(-20deg);opacity:.25}
-.vs{font-size:2rem}
-.bat p{font-size:1.15rem;font-weight:bold}
 /* Aviso y ventana */
-#aviso{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(200%);background:#fff;color:#2b6b3a;font-weight:bold;padding:12px 18px;border-radius:16px;width:max-content;max-width:90%;text-align:center;transition:.3s;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:40}
+#aviso{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(200%);background:#fff;color:#5a3418;font-weight:bold;padding:12px 18px;border-radius:16px;width:max-content;max-width:90%;text-align:center;transition:.3s;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:40}
 #aviso.ver{transform:translateX(-50%) translateY(0)}
-#modal{position:fixed;inset:0;background:rgba(10,40,20,.6);display:flex;align-items:center;justify-content:center;z-index:30;padding:20px}
-#modal.opaco{background:#2b6b3a}
+#modal{position:fixed;inset:0;background:rgba(30,15,5,.6);display:flex;align-items:center;justify-content:center;z-index:30;padding:20px}
 #modal.oculto{display:none}
-.caja{background:#fffdf3;color:#21413f;border-radius:24px;padding:22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.2);animation:pop .35s;max-height:90vh;overflow-y:auto}
-.caja h2{font-size:1.5rem;margin-bottom:8px;color:#2b6b3a}
+.caja{background:#fffdf3;color:#3e2210;border-radius:24px;padding:22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.2);animation:pop .35s;max-height:90vh;overflow-y:auto}
+.caja h2{font-size:1.5rem;margin-bottom:8px;color:#5a3418}
 .caja p{margin:8px 0;line-height:1.4}
 .caja .botones{display:flex;flex-direction:column;gap:12px;margin-top:16px}
 .caja .grande-emo{font-size:3.5rem;line-height:1.1}
-.estrellas{font-size:2.6rem;letter-spacing:4px;margin:6px 0}
-.apagada{filter:grayscale(1);opacity:.3}
-.reglas{font-size:.88rem;background:#eef7e9;border-radius:12px;padding:8px 10px;text-align:left;line-height:1.55}
-.consejo{background:#fff4cc;border-radius:12px;padding:10px;font-weight:bold;color:#6b4a00}
-@keyframes pop{from{transform:scale(.3);opacity:0}}
 </style>
 </head>
 <body>
@@ -134,25 +108,32 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
 
   <!-- MENÚ -->
   <section id="menu" class="pantalla activa">
-    <div class="logo">🚩</div>
-    <h1>Captura la Bandera</h1>
-    <p class="sub">¡Esconde tu bandera y encuentra la del rival!</p>
-    <button class="btn grande" onclick="irNiveles()">🗺️ Aventura</button>
-    <button class="btn grande naranja" onclick="irEnLinea()">🌎 Jugar con amigos en línea</button>
-    <button class="btn grande morado" onclick="iniciarDuelo()">👫 Dos jugadores, un teléfono</button>
-    <button class="btn grande verde" onclick="mostrar('ayuda')">❓ Cómo jugar</button>
+    <div class="logo"><div class="ficha b"></div><div class="ficha r"><span class="corona">👑</span></div></div>
+    <h1>Damas</h1>
+    <p class="sub">¡Piensa, come y corona!</p>
+    <button class="btn grande verde" onclick="mostrar('config')">🤖 Jugar contra la máquina</button>
+    <button class="btn grande naranja" onclick="irEnLinea()">🌎 Jugar con un amigo en línea</button>
+    <button class="btn grande" onclick="mostrar('ayuda')">❓ Cómo jugar</button>
     <button class="btn chico" id="btnSonido" onclick="alternarSonido()">🔊 Sonido: sí</button>
   </section>
 
-  <!-- NIVELES -->
-  <section id="niveles" class="pantalla">
+  <!-- CONFIGURAR PARTIDA CONTRA LA MÁQUINA -->
+  <section id="config" class="pantalla">
     <div class="barra">
       <button class="btn icono" onclick="mostrar('menu')">←</button>
-      <h2 class="cab">Aventura</h2>
-      <span class="total" id="totalEstrellas">⭐ 0</span>
+      <h2 class="cab">Contra la máquina</h2>
+      <span style="width:46px"></span>
     </div>
-    <p class="sub" style="margin-top:10px">Vence a cada rival capturando su bandera 🚩</p>
-    <div class="rejilla" id="rejilla"></div>
+    <div class="tarjeta"><h3>1. Elige el nivel</h3><div class="opciones" id="opNiveles"></div></div>
+    <div class="tarjeta"><h3>2. Elige tu color</h3>
+      <div class="colores">
+        <button class="opcion" data-color="1" onclick="elegirColor(1)"><div class="ficha b"></div><b>Blancas</b><small>Empiezas tú</small></button>
+        <button class="opcion" data-color="2" onclick="elegirColor(2)"><div class="ficha r"></div><b>Rojas</b><small>Empieza la máquina</small></button>
+        <button class="opcion" data-color="0" onclick="elegirColor(0)"><span class="e" style="font-size:1.9rem">🎲</span><b>Sorpresa</b><small>Al azar</small></button>
+      </div></div>
+    <div style="height:16px"></div>
+    <button class="btn grande verde" onclick="empezarMaquina()">¡A jugar!</button>
+    <div style="height:16px"></div>
   </section>
 
   <!-- EN LÍNEA -->
@@ -203,21 +184,17 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
       <h2 class="cab">Cómo jugar</h2>
       <span style="width:46px"></span>
     </div>
-    <div class="tarjeta paso"><span class="num">1</span><div><b>Objetivo:</b> atrapa la 🚩 <b>bandera</b> del rival antes de que él atrape la tuya.</div></div>
-    <div class="tarjeta paso"><span class="num">2</span><div>Tú ves tus animales. Los del rival están <b>escondidos</b> ❓ hasta que pelean.</div></div>
-    <div class="tarjeta paso"><span class="num">3</span><div>En tu turno mueves <b>un animal una casilla</b>: adelante, atrás o a los lados. No se puede pisar el agua 🌊.</div></div>
-    <div class="tarjeta paso"><span class="num">4</span><div>Si llegas a la casilla de un rival, <b>pelean</b>: <b>gana el número más grande</b>. Si son iguales, salen los dos.
-      <div class="animales">
-        <div><span>🐭</span>1 Ratón</div><div><span>🐱</span>2 Gato</div><div><span>🐶</span>3 Perro</div>
-        <div><span>🐺</span>4 Lobo</div><div><span>🐻</span>5 Oso</div><div><span>🦁</span>6 León</div>
-      </div></div></div>
-    <div class="tarjeta paso"><span class="num">5</span><div>La 💣 <b>trampa</b> no se mueve y vence a todos… <b>¡menos al 🐭 Ratón, que la desactiva!</b></div></div>
-    <div class="tarjeta paso"><span class="num">6</span><div>Antes de atacar, el tablero te avisa:<br>🟢 vas a ganar · 🔴 vas a perder · 🟡 no se sabe.</div></div>
-    <div class="tarjeta"><h3>🧠 Trucos de estratega</h3>
-      • Esconde tu 🚩 atrás y rodéala de 💣.<br>
-      • Las piezas que <b>nunca se mueven</b> pueden ser la bandera… ¡o una trampa! Mándales un 🐭.<br>
-      • Usa animales pequeños para descubrir a los rivales y guarda al 🦁 para el final.<br>
-      • Cuando un animal pelea queda descubierto 👁. ¡Recuerda quién es quién!</div>
+    <div class="tarjeta paso"><span class="num">1</span><div>Cada jugador tiene <b>12 fichas</b>. Las fichas solo van por las casillas oscuras. <b>Empiezan las blancas.</b></div></div>
+    <div class="tarjeta paso"><span class="num">2</span><div>Las fichas avanzan <b>una casilla en diagonal hacia adelante</b>.</div></div>
+    <div class="tarjeta paso"><span class="num">3</span><div>Para <b>comer</b>, saltas sobre una ficha rival que esté pegada a la tuya y caes en la casilla vacía de atrás. Si después puedes comer otra, <b>sigues saltando</b>.</div></div>
+    <div class="tarjeta paso"><span class="num">4</span><div><b>Comer es obligatorio.</b> Si puedes comer, las fichas que pueden hacerlo brillan ✨.</div></div>
+    <div class="tarjeta paso"><span class="num">5</span><div>Si una ficha llega al otro lado del tablero, se <b>corona</b> y se vuelve <b>dama 👑</b>. La dama se mueve en diagonal <b>todas las casillas libres que quiera</b>, hacia adelante o atrás, y puede comer desde lejos.</div></div>
+    <div class="tarjeta paso"><span class="num">6</span><div>Tienes <b>1 minuto ⏱ por jugada</b>. Si se acaba el tiempo, se mueve una ficha tuya al azar.</div></div>
+    <div class="tarjeta paso"><span class="num">7</span><div><b>Ganas</b> si tu rival se queda sin fichas o sin jugadas posibles.</div></div>
+    <div class="tarjeta"><h3>🧠 Trucos</h3>
+      • No dejes fichas solas: es fácil que te las coman.<br>
+      • Mantén tu última fila ocupada para que el rival no corone.<br>
+      • A veces conviene regalar una ficha para comer dos.</div>
     <div style="height:20px"></div>
   </section>
 
@@ -228,54 +205,38 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
       <div id="titulo"></div>
       <button class="btn icono" id="btnReiniciar" onclick="reiniciar()">↻</button>
     </div>
-    <div class="marcador">
-      <div class="equipo e1" id="eq1"><span>🔵</span><small id="nom1">Tú</small><b id="n1">0</b></div>
-      <div class="equipo e2" id="eq2"><b id="n2">0</b><small id="nom2">Rival</small><span>🔴</span></div>
-    </div>
-    <div id="guia"></div>
+    <div class="jugador" id="jArriba"><div class="ficha" id="fArriba"></div><span class="nom" id="nomArriba"></span><span class="cuenta" id="cArriba"></span><span class="reloj" id="rArriba">1:00</span></div>
     <div id="tablero"></div>
-    <div class="acciones" id="accPreparar">
-      <button class="btn chico" onclick="mezclarMio()">🔀 Mezclar</button>
-      <button class="btn verde" onclick="estoyListo()">✅ ¡Listo, a jugar!</button>
-    </div>
-    <div class="leyenda"><span>🐭1</span><span>🐱2</span><span>🐶3</span><span>🐺4</span><span>🐻5</span><span>🦁6</span><span>💣 vence a todos menos 🐭</span></div>
+    <div class="jugador" id="jAbajo"><div class="ficha" id="fAbajo"></div><span class="nom" id="nomAbajo"></span><span class="cuenta" id="cAbajo"></span><span class="reloj" id="rAbajo">1:00</span></div>
+    <div id="guia"></div>
+    <div class="acciones"><button class="btn chico" id="btnDeshacer" onclick="deshacer()">↶ Deshacer</button></div>
   </section>
 
-  <div id="batalla" class="oculto"><div class="bat" id="batCaja"></div></div>
   <div id="modal" class="oculto"><div class="caja" id="modalCaja"></div></div>
   <div id="aviso"></div>
 </div>
 
 <script src="logica.js"></script>
 <script>
-// ================= NIVELES =================
-const COMPLETO = ['B','T','T',1,1,2,2,3,3,4,5,6];
-const LAGOS_8 = [[1,3],[1,4],[4,3],[4,4]];
 const NIVELES = [
-  { nombre:'Primer combate', rival:'Pepe el Novato', ia:0, W:5, H:6, lagos:[], ejercito:['B',2,3,4,5],
-    consejo:'Mueve tus animales hacia el rival. Si chocan, ¡gana el número más grande! Busca la 🚩 escondida.' },
-  { nombre:'¡Cuidado con las trampas!', rival:'Toña la Tramposa', ia:0, W:5, H:6, lagos:[], ejercito:['B','T',1,2,3,4,5],
-    consejo:'La 💣 trampa vence a todos… ¡menos al 🐭 Ratón, que la desactiva!' },
-  { nombre:'El lago', rival:'Capitán Charco', ia:1, W:6, H:7, lagos:[[2,3],[3,3]], ejercito:['B','T','T',1,1,2,3,4,6],
-    consejo:'Nadie puede pisar el agua 🌊. Una pieza que nunca se mueve puede ser la bandera… ¡o una trampa!' },
-  { nombre:'Buena memoria', rival:'Lola Lista', ia:1, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
-    consejo:'Cuando un animal pelea queda descubierto 👁. ¡Recuerda quién es quién!' },
-  { nombre:'Esconde tu bandera', rival:'Zorro Astuto', ia:2, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
-    consejo:'Este rival busca tu bandera. Ponla atrás y rodéala de 💣 trampas.' },
-  { nombre:'Espías', rival:'Agente Búho', ia:2, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
-    consejo:'Usa animales pequeños para descubrir a los rivales y guarda al 🦁 para el final.' },
-  { nombre:'👑 El General', rival:'General Bigotes', ia:3, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
-    consejo:'El jefe final piensa muy bien sus jugadas. ¡Usa todo lo que aprendiste!' },
+  { e:'🐣', n:'Fácil', d:'Para aprender' },
+  { e:'🙂', n:'Medio', d:'Piensa un poco' },
+  { e:'😎', n:'Difícil', d:'Piensa varias jugadas' },
+  { e:'🧠', n:'Experto', d:'¡Muy difícil!' },
 ];
-const TABLERO_DUELO = { W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO };
+const TIEMPO = 60;              // segundos por jugada
+const SIN_AVANCE_TABLAS = 50;   // jugadas solo con damas y sin comer = empate
+const NOMBRE_COLOR = { 1:'Blancas', 2:'Rojas' };
 
 // ================= ALMACENAMIENTO =================
-function cargar(){ try { return JSON.parse(localStorage.getItem('bandera_progreso')) || {}; } catch(e){ return {}; } }
-function guardar(){ try { localStorage.setItem('bandera_progreso', JSON.stringify(progreso)); } catch(e){} }
+function cargar(){ try { return JSON.parse(localStorage.getItem('damas_progreso')) || {}; } catch(e){ return {}; } }
+function guardar(){ try { localStorage.setItem('damas_progreso', JSON.stringify(progreso)); } catch(e){} }
 const progreso = cargar();
-if (!progreso.estrellas) progreso.estrellas = {};
 if (progreso.sonido === undefined) progreso.sonido = true;
 if (!progreso.amigos) progreso.amigos = [];
+if (!progreso.victorias) progreso.victorias = [0, 0, 0, 0];
+if (progreso.nivel === undefined) progreso.nivel = 0;
+if (progreso.color === undefined) progreso.color = 1;
 if (!progreso.codigo) {
   const L = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = '';
   for (let i = 0; i < 6; i++) s += L[Math.floor(Math.random() * L.length)];
@@ -287,36 +248,34 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 function mostrar(id, empujar = true){
   document.querySelectorAll('.pantalla').forEach(e => e.classList.toggle('activa', e.id === id));
+  if (id === 'config') pintarConfig();
   if (empujar && id !== 'menu') try { history.pushState({p:id}, ''); } catch(e){}
 }
-window.addEventListener('popstate', () => { if (S.modo === 'online') cerrarConexion(); S.modo = null; cerrarModal(); mostrar('menu', false); });
+window.addEventListener('popstate', () => { pararReloj(); if (S.modo === 'online') cerrarConexion(); S.modo = null; S.fin = true; cerrarModal(); mostrar('menu', false); });
 let tAviso = null;
 function aviso(txt, ms = 2600){ const a = $('aviso'); a.textContent = txt; a.classList.add('ver'); clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove('ver'), ms); }
-function mostrarModal(html, opaco = false){ $('modalCaja').innerHTML = html; $('modal').classList.toggle('opaco', opaco); $('modal').classList.remove('oculto'); }
+function mostrarModal(html){ $('modalCaja').innerHTML = html; $('modal').classList.remove('oculto'); }
 function cerrarModal(){ $('modal').classList.add('oculto'); }
-const nombreTipo = tp => TIPOS[tp].n;
-const emo = tp => TIPOS[tp].e;
+const claseColor = lado => lado === BLANCAS ? 'b' : 'r';
 
 // ================= SONIDO =================
 let ctxAudio = null;
-function tono(f, d, tipo = 'sine', vol = .15, ret = 0, fFin = 0){
+function tono(f, d, tipo = 'sine', vol = .15, ret = 0){
   if (!progreso.sonido) return;
   try {
     ctxAudio = ctxAudio || new (window.AudioContext || window.webkitAudioContext)();
     const t0 = ctxAudio.currentTime + ret, o = ctxAudio.createOscillator(), g = ctxAudio.createGain();
     o.type = tipo; o.frequency.setValueAtTime(f, t0);
-    if (fFin) o.frequency.exponentialRampToValueAtTime(fFin, t0 + d);
     g.gain.setValueAtTime(vol, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + d);
     o.connect(g); g.connect(ctxAudio.destination); o.start(t0); o.stop(t0 + d + .05);
   } catch(e){}
 }
-function sonido(t){
-  if (t === 'sel') tono(660, .08, 'triangle', .1);
-  if (t === 'paso') tono(420, .09, 'triangle', .12);
-  if (t === 'choque') { tono(180, .2, 'square', .08); tono(120, .25, 'sawtooth', .06, .05); }
-  if (t === 'bum') tono(200, .6, 'sawtooth', .15, 0, 40);
-  if (t === 'bien') [600, 900].forEach((f, i) => tono(f, .15, 'triangle', .12, i * .1));
-  if (t === 'mal') [350, 250].forEach((f, i) => tono(f, .2, 'square', .06, i * .12));
+function sonido(t, n = 1){
+  if (t === 'sel') tono(660, .07, 'triangle', .1);
+  if (t === 'mueve') { tono(300, .08, 'triangle', .18); tono(220, .06, 'triangle', .1, .05); }
+  if (t === 'come') for (let i = 0; i < n; i++) { tono(520 + i * 150, .1, 'square', .07, i * .12); }
+  if (t === 'corona') [523, 659, 784].forEach((f, i) => tono(f, .18, 'triangle', .14, i * .1));
+  if (t === 'tic') tono(1000, .04, 'square', .05);
   if (t === 'gana') [523, 659, 784, 1047].forEach((f, i) => tono(f, .25, 'triangle', .15, i * .13));
   if (t === 'pierde') [400, 340, 280].forEach((f, i) => tono(f, .3, 'sawtooth', .06, i * .18));
   if (t === 'reto') [700, 900, 700, 900].forEach((f, i) => tono(f, .12, 'square', .06, i * .14));
@@ -324,311 +283,258 @@ function sonido(t){
 function alternarSonido(){ progreso.sonido = !progreso.sonido; guardar(); pintarSonido(); sonido('sel'); }
 function pintarSonido(){ $('btnSonido').textContent = progreso.sonido ? '🔊 Sonido: sí' : '🔇 Sonido: no'; }
 
+// ================= CONFIGURAR =================
+function pintarConfig(){
+  $('opNiveles').innerHTML = NIVELES.map((n, i) => `<button class="opcion${progreso.nivel === i ? ' activa' : ''}" onclick="elegirNivel(${i})">
+    <span class="e">${n.e}</span><b>${n.n}</b><small>${n.d}${progreso.victorias[i] ? `<br>🏆 Ganadas: ${progreso.victorias[i]}` : ''}</small></button>`).join('');
+  document.querySelectorAll('[data-color]').forEach(b => b.classList.toggle('activa', +b.dataset.color === progreso.color));
+}
+function elegirNivel(i){ progreso.nivel = i; guardar(); sonido('sel'); pintarConfig(); }
+function elegirColor(c){ progreso.color = c; guardar(); sonido('sel'); pintarConfig(); }
+
 // ================= ESTADO =================
-// Coordenadas: el azul empieza abajo y el rojo arriba. Cada jugador ve su ejército abajo (el rojo ve el tablero girado).
-const S = { modo:null, nivel:0, cfg:null, t:null, c:null, turno:AZUL, vista:AZUL, fase:'preparar', sel:-1,
-            ocupado:false, ultimo:null, listo:{1:false,2:false}, sinBatalla:0, ultIA:null, iniciales:{1:0,2:0} };
+const S = { modo:null, b:null, turno:BLANCAS, miColor:BLANCAS, nivel:0, sel:-1, camino:null, movs:[],
+            ultimo:null, historial:[], fin:true, pensando:false, sinAvance:0, limite:0, reloj:null, rival:'' };
 
-function nuevaPartida(cfg){
-  S.cfg = cfg; S.t = crearTablero(cfg.W, cfg.H, cfg.lagos); S.c = new Array(S.t.N).fill(null);
-  Object.assign(S, { turno:AZUL, fase:'preparar', sel:-1, ocupado:false, ultimo:null, listo:{1:false,2:false}, sinBatalla:0, ultIA:null });
-  S.iniciales = { 1: cfg.ejercito.filter(seMueve).length, 2: cfg.ejercito.filter(seMueve).length };
-  $('btnReiniciar').style.display = S.modo === 'online' ? 'none' : '';
-  const tb = $('tablero');
-  tb.style.gridTemplateColumns = `repeat(${S.t.W},1fr)`;
-  tb.style.width = `min(100%, calc((100vh - 330px) * ${S.t.W / S.t.H}))`;
-}
-const canon = d => S.vista === AZUL ? d : S.t.N - 1 - d;
-const nombreLado = lado => lado === AZUL ? $('nom1').textContent : $('nom2').textContent;
-
-// ---- Aventura ----
-function irNiveles(){
-  let total = 0, html = '';
-  NIVELES.forEach((n, i) => {
-    const e = progreso.estrellas[i] || 0; total += e;
-    const abierto = i === 0 || (progreso.estrellas[i - 1] || 0) > 0;
-    const cls = 'nivel' + (!abierto ? ' bloq' : i === NIVELES.length - 1 ? ' jefe' : '');
-    const est = '⭐'.repeat(e) + '<span class="apagada">' + '⭐'.repeat(3 - e) + '</span>';
-    html += `<button class="${cls}" onclick="${abierto ? `introNivel(${i})` : `aviso('Gana el nivel anterior para abrir este 🔒')`}">${abierto ? i + 1 : '🔒'}<small>${abierto ? est : ''}</small></button>`;
-  });
-  $('rejilla').innerHTML = html;
-  $('totalEstrellas').textContent = `⭐ ${total}/${NIVELES.length * 3}`;
-  mostrar('niveles');
-}
-function introNivel(i){
-  const n = NIVELES[i];
-  mostrarModal(`<div class="grande-emo">🔴</div><h2>Nivel ${i + 1}: ${esc(n.nombre)}</h2>
-    <p>Tu rival: <b>${esc(n.rival)}</b></p>
-    <p class="consejo">💡 ${esc(n.consejo)}</p>
-    <div class="reglas">⭐ Captura la bandera<br>⭐⭐ Gana sin perder la mitad de tus animales<br>⭐⭐⭐ Gana perdiendo 2 animales o menos</div>
-    <div class="botones"><button class="btn grande verde" style="width:100%" onclick="cerrarModal();empezarNivel(${i})">¡Jugar!</button>
-    <button class="btn gris" onclick="cerrarModal()">Volver</button></div>`);
-}
-function empezarNivel(i){
-  S.modo = 'aventura'; S.nivel = i; S.vista = AZUL;
-  const n = NIVELES[i];
-  $('titulo').textContent = `Nivel ${i + 1}`;
-  $('nom1').textContent = 'Tú'; $('nom2').textContent = n.rival;
-  nuevaPartida(n);
-  ponerEjercito(S.c, ROJO, colocar(S.t, ROJO, n.ejercito, n.ia >= 2));
-  ponerEjercito(S.c, AZUL, colocar(S.t, AZUL, n.ejercito, false));
-  mostrar('juego'); dibujar();
-}
-
-// ---- Dos jugadores en un teléfono ----
-function iniciarDuelo(){
-  S.modo = 'duelo'; S.vista = AZUL;
-  $('titulo').textContent = 'Dos jugadores';
-  $('nom1').textContent = 'Jugador 1'; $('nom2').textContent = 'Jugador 2';
-  nuevaPartida(TABLERO_DUELO);
-  ponerEjercito(S.c, AZUL, colocar(S.t, AZUL, TABLERO_DUELO.ejercito, false));
-  ponerEjercito(S.c, ROJO, colocar(S.t, ROJO, TABLERO_DUELO.ejercito, false));
+function nuevaPartida(miColor){
+  pararReloj();
+  Object.assign(S, { b:tableroInicial(), turno:BLANCAS, miColor, sel:-1, camino:null, ultimo:null, historial:[],
+                     fin:false, pensando:false, sinAvance:0 });
+  $('fAbajo').className = 'ficha ' + claseColor(miColor);
+  $('fArriba').className = 'ficha ' + claseColor(3 - miColor);
+  $('btnDeshacer').style.display = S.modo === 'maquina' ? '' : 'none';
+  $('btnReiniciar').style.display = S.modo === 'maquina' ? '' : 'none';
   mostrar('juego');
-  pasarTelefono(AZUL, 'prepara tu ejército');
-}
-function pasarTelefono(lado, que){
-  S.vista = lado; S.sel = -1;
-  mostrarModal(`<div class="grande-emo">${lado === AZUL ? '🔵' : '🔴'}</div><h2>Jugador ${lado}</h2>
-    <p>Toma el teléfono y ${que}.</p><p style="font-size:.9rem">El otro jugador no debe mirar 🙈</p>
-    <div class="botones"><button class="btn grande ${lado === AZUL ? '' : 'rojo'}" style="width:100%" onclick="cerrarModal();dibujar()">Soy el Jugador ${lado}, ¡mostrar!</button></div>`, true);
+  empezarTurno();
 }
 
-function reiniciar(){
-  cerrarModal();
-  if (S.modo === 'aventura') empezarNivel(S.nivel);
-  else if (S.modo === 'duelo') iniciarDuelo();
+function empezarMaquina(){
+  S.modo = 'maquina'; S.nivel = progreso.nivel;
+  const color = progreso.color || (Math.random() < .5 ? BLANCAS : ROJAS);
+  const n = NIVELES[S.nivel];
+  $('titulo').textContent = `Nivel ${n.n} ${n.e}`;
+  $('nomAbajo').textContent = 'Tú';
+  $('nomArriba').textContent = `Máquina ${n.e}`;
+  nuevaPartida(color);
+  if (color === ROJAS) aviso('Juegas con las rojas. Empieza la máquina.');
 }
+function reiniciar(){ cerrarModal(); if (S.modo === 'maquina') empezarMaquina(); }
 function salirAlMenu(){
-  if (S.modo === 'online' && S.fase !== 'fin') {
+  if (S.modo === 'online' && !S.fin) {
     mostrarModal(`<h2>¿Salir de la partida?</h2><p>Tu amigo ganará si te vas.</p><div class="botones">
-      <button class="btn rojo" onclick="cerrarModal();cerrarConexion();S.modo=null;mostrar('menu')">Sí, salir</button>
+      <button class="btn rojo" onclick="cerrarModal();pararReloj();S.fin=true;cerrarConexion();S.modo=null;mostrar('menu')">Sí, salir</button>
       <button class="btn gris" onclick="cerrarModal()">Seguir jugando</button></div>`);
     return;
   }
+  pararReloj(); S.fin = true;
   if (S.modo === 'online') cerrarConexion();
   S.modo = null; cerrarModal(); mostrar('menu');
 }
 
-// ================= PREPARAR EL EJÉRCITO =================
-function mezclarMio(){
-  if (S.fase !== 'preparar' || S.listo[S.vista]) return;
-  for (const i of zona(S.t, S.vista)) S.c[i] = null;
-  ponerEjercito(S.c, S.vista, colocar(S.t, S.vista, S.cfg.ejercito, false));
-  S.sel = -1; sonido('sel'); dibujar();
+// ================= RELOJ: 1 minuto por jugada =================
+function pararReloj(){ clearInterval(S.reloj); S.reloj = null; }
+function iniciarReloj(){
+  pararReloj();
+  S.limite = Date.now() + TIEMPO * 1000;
+  let ultimoSeg = TIEMPO;
+  const pintar = () => {
+    const seg = Math.max(0, Math.ceil((S.limite - Date.now()) / 1000));
+    const txt = `⏱ ${Math.floor(seg / 60)}:${String(seg % 60).padStart(2, '0')}`;
+    const miReloj = S.turno === S.miColor ? $('rAbajo') : $('rArriba'), otro = S.turno === S.miColor ? $('rArriba') : $('rAbajo');
+    miReloj.textContent = txt; miReloj.classList.toggle('poco', seg <= 10);
+    otro.textContent = '⏱ 1:00'; otro.classList.remove('poco');
+    if (seg !== ultimoSeg && seg <= 5 && seg > 0 && S.turno === S.miColor) sonido('tic');
+    ultimoSeg = seg;
+    if (seg <= 0) { pararReloj(); seAcaboTiempo(); }
+  };
+  pintar();
+  S.reloj = setInterval(pintar, 250);
 }
-function ejercitoDe(lado){ return zona(S.t, lado).filter(i => S.c[i]).map(i => ({ i, tipo:S.c[i].tipo })); }
-
-function estoyListo(){
-  if (S.fase !== 'preparar' || S.listo[S.vista]) return;
-  S.sel = -1; S.listo[S.vista] = true; sonido('bien');
-  if (S.modo === 'aventura') { S.listo[ROJO] = true; comenzar(); }
-  else if (S.modo === 'duelo') {
-    if (S.vista === AZUL) pasarTelefono(ROJO, 'prepara tu ejército');
-    else { comenzar(); pasarTelefono(AZUL, '¡empieza la batalla!'); }
-  } else if (S.modo === 'online') {
-    enviar({ tipo:'ejercito', piezas:ejercitoDe(S.vista) });
-    if (S.listo[3 - S.vista]) comenzar(); else dibujar();
-  }
-}
-function comenzar(){
-  S.fase = 'jugar'; S.turno = AZUL; S.sel = -1;
-  dibujar();
-  if (S.modo !== 'duelo') aviso(S.turno === S.vista ? '¡Empiezas tú! Mueve un animal 🐾' : 'Empieza tu rival', 2500);
+function seAcaboTiempo(){
+  if (S.fin) return;
+  // Solo este teléfono mueve por el jugador que está aquí; en línea, el otro teléfono lo hace por su jugador
+  if (S.turno !== S.miColor) return;
+  let opciones = movimientos(S.b, S.turno);
+  if (S.camino) opciones = opciones.filter(m => S.camino.every((x, k) => m.camino[k] === x));
+  aviso('⏱ ¡Se acabó el tiempo! Se movió una ficha al azar.', 3000);
+  const m = opciones[Math.floor(Math.random() * opciones.length)];
+  if (m) jugadaPropia(m);
 }
 
 // ================= DIBUJAR =================
-function guia(){
-  if (S.fase === 'fin') return '¡Fin de la partida! Ahora puedes ver todas las piezas.';
-  if (S.fase === 'preparar') {
-    if (S.listo[S.vista]) return '⏳ Esperando a que tu amigo acomode su ejército…';
-    return S.sel >= 0 ? 'Ahora toca otra casilla de tu zona para cambiarlas de lugar 🔄'
-                      : 'Acomoda tu ejército: toca dos casillas para cambiarlas. ¡Esconde bien tu 🚩!';
-  }
-  if (S.turno !== S.vista && S.modo !== 'duelo') return S.modo === 'aventura' ? `🤔 ${NIVELES[S.nivel].rival} está pensando…` : `⏳ Turno de ${nombreLado(S.turno)}`;
-  if (S.sel < 0) return 'Tu turno: toca uno de tus animales 🐾';
-  return 'Toca una casilla marcada · ⚔️🟢 ganas · ⚔️🔴 pierdes · ⚔️🟡 no se sabe';
+const canon = d => S.miColor === BLANCAS ? d : 63 - d;   // tus fichas siempre abajo
+
+function opcionesActuales(){
+  // Jugadas que siguen siendo posibles con el camino que ya llevas (para capturas múltiples)
+  if (!S.camino) return S.movs;
+  return S.movs.filter(m => m.camino.length > S.camino.length && S.camino.every((x, k) => m.camino[k] === x));
 }
 
-function dibujar(){
-  const { t, c } = S, objetivos = {};
-  if (S.fase === 'jugar' && S.sel >= 0) {
-    const yo = c[S.sel];
-    for (const j of vecinos(t, S.sel)) {
-      const q = c[j];
-      if (!q) objetivos[j] = 'obj';
-      else if (q.lado !== yo.lado) objetivos[j] = 'ataque ' + (q.visto ? resolver(yo.tipo, q.tipo) : 'duda');
+function dibujar(animar = -1){
+  const b = S.b, ops = opcionesActuales();
+  const debenComer = new Set(), destinos = {}, comidas = new Set();
+  const miTurno = esMiTurno();
+  if (miTurno) {
+    if (!S.camino && S.movs.length && S.movs[0].capturas.length) S.movs.forEach(m => debenComer.add(m.camino[0]));
+    const desde = S.camino ? S.camino[S.camino.length - 1] : S.sel;
+    if (desde >= 0) {
+      const paso = S.camino ? S.camino.length : 1;
+      const lista = S.camino ? ops : S.movs.filter(m => m.camino[0] === S.sel);
+      for (const m of lista) destinos[m.camino[paso]] = m.capturas.length > 0;
     }
+    if (S.camino) for (const m of ops) m.capturas.slice(0, S.camino.length - 1).forEach(x => comidas.add(x));
   }
-  const miZona = S.fase === 'preparar' && !S.listo[S.vista] ? new Set(zona(t, S.vista)) : null;
+  // Mientras haces una captura múltiple, la ficha se ve avanzando
+  let vista = b;
+  if (S.camino) { vista = b.slice(); const v = vista[S.camino[0]]; vista[S.camino[0]] = 0; vista[S.camino[S.camino.length - 1]] = v; }
   let html = '';
-  for (let d = 0; d < t.N; d++) {
-    const i = canon(d), p = c[i];
-    let cls = 'celda', dentro = '';
-    if (t.lago[i]) { cls += ' lago'; dentro = '🌊'; }
-    if (miZona && miZona.has(i)) cls += ' mizona';
-    if (i === S.sel) cls += S.fase === 'preparar' ? ' cambio sel' : ' sel';
-    if (objetivos[i]) cls += ' ' + objetivos[i];
-    if (S.ultimo && S.fase === 'jugar' && (i === S.ultimo.de || i === S.ultimo.a)) cls += ' ultimo';
-    if (p) {
-      const veo = p.lado === S.vista || p.visto || S.fase === 'fin';
-      if (veo) {
-        const num = typeof p.tipo === 'number' ? `<b>${p.tipo}</b>` : '';
-        const ojo = p.lado === S.vista && p.visto && S.fase !== 'fin' ? '<span class="ojo">👁</span>' : '';
-        dentro = `<div class="pieza l${p.lado}"><span class="emo">${emo(p.tipo)}</span>${num}${ojo}</div>`;
-      } else dentro = `<div class="pieza l${p.lado} oculta"><span class="emo">?</span></div>`;
-    }
+  for (let d = 0; d < 64; d++) {
+    const i = canon(d), r = (i / 8) | 0, c = i % 8, oscura = (r + c) % 2 === 1;
+    let cls = 'casilla' + (oscura ? ' oscura' : '');
+    if (S.ultimo && S.ultimo.includes(i)) cls += ' ultimo';
+    if (S.camino && S.camino.includes(i)) cls += ' paso';
+    if (i === S.sel || (S.camino && i === S.camino[S.camino.length - 1])) cls += ' sel';
+    if (debenComer.has(i) && S.sel < 0) cls += ' debe';
+    if (i in destinos) cls += ' destino' + (destinos[i] ? ' come' : '');
+    const v = vista[i];
+    let dentro = '';
+    if (v) dentro = `<div class="ficha ${claseColor(ladoDe(v))}${i === animar ? ' pop' : ''}${comidas.has(i) ? ' comida' : ''}">${esDama(v) ? '<span class="corona">👑</span>' : ''}</div>`;
     html += `<div class="${cls}" data-d="${d}">${dentro}</div>`;
   }
   $('tablero').innerHTML = html;
-  $('n1').textContent = contarAnimales(c, AZUL) + ' 🐾';
-  $('n2').textContent = contarAnimales(c, ROJO) + ' 🐾';
-  $('eq1').classList.toggle('activo', S.fase === 'jugar' && S.turno === AZUL);
-  $('eq2').classList.toggle('activo', S.fase === 'jugar' && S.turno === ROJO);
-  $('guia').textContent = guia();
-  $('accPreparar').style.display = S.fase === 'preparar' && !S.listo[S.vista] ? '' : 'none';
+  $('cAbajo').textContent = `● ${contar(b, S.miColor)}`;
+  $('cArriba').textContent = `● ${contar(b, 3 - S.miColor)}`;
+  $('jAbajo').classList.toggle('activo', !S.fin && S.turno === S.miColor);
+  $('jArriba').classList.toggle('activo', !S.fin && S.turno !== S.miColor);
+  $('guia').textContent = textoGuia(debenComer.size > 0);
+  $('btnDeshacer').disabled = S.pensando || S.fin || !S.historial.length;
+}
+
+function esMiTurno(){ return !S.fin && !S.pensando && S.turno === S.miColor; }
+
+function textoGuia(debeComer){
+  if (S.fin) return '¡Fin de la partida!';
+  if (S.turno !== S.miColor) return S.modo === 'maquina' ? 'La máquina está pensando… 🤖' : `Turno de ${S.rival} ⏳`;
+  if (S.camino) return '¡Sigue comiendo! Toca el siguiente punto amarillo 🟡';
+  if (S.sel >= 0) return 'Toca un punto para mover la ficha';
+  if (debeComer) return '¡Tienes que comer! Toca una ficha que brille ✨';
+  return 'Tu turno: toca una de tus fichas';
 }
 
 $('tablero').addEventListener('click', e => {
-  const el = e.target.closest('.celda');
+  const el = e.target.closest('.casilla');
   if (el) tocar(canon(+el.dataset.d));
 });
 
 function tocar(i){
-  if (S.ocupado) return;
-  const { t, c } = S, p = c[i];
-  if (S.fase === 'preparar') {
-    if (S.listo[S.vista]) return;
-    if (!zona(t, S.vista).includes(i)) { aviso('Solo puedes acomodar en tu zona (las casillas con borde blanco)'); return; }
-    if (S.sel < 0) { if (p) { S.sel = i; sonido('sel'); } }
-    else { [c[S.sel], c[i]] = [c[i], c[S.sel]]; S.sel = -1; sonido('paso'); }
-    dibujar(); return;
+  if (!esMiTurno()) { if (!S.fin) aviso('Espera tu turno ⏳', 1200); return; }
+  const v = S.b[i];
+  if (S.camino) {   // en medio de una captura múltiple
+    const paso = S.camino.length, cont = opcionesActuales().filter(m => m.camino[paso] === i);
+    if (!cont.length) { aviso('¡Tienes que seguir comiendo! Toca un punto amarillo'); return; }
+    avanzarCamino(i, cont); return;
   }
-  if (S.fase !== 'jugar') return;
-  if (S.turno !== S.vista || (S.modo === 'aventura' && S.turno !== AZUL)) { aviso('Espera tu turno ⏳', 1200); return; }
-  if (p && p.lado === S.turno) {
-    if (!seMueve(p.tipo)) { aviso(p.tipo === 'B' ? 'La 🚩 bandera no se mueve. ¡Protégela!' : 'La 💣 trampa no se mueve.'); S.sel = -1; dibujar(); return; }
+  if (ladoDe(v) === S.miColor) {
+    if (!S.movs.some(m => m.camino[0] === i)) {
+      aviso(S.movs[0] && S.movs[0].capturas.length ? '¡Tienes que comer! Usa una ficha que brille ✨' : 'Esa ficha no se puede mover ahora');
+      S.sel = -1; dibujar(); return;
+    }
     S.sel = S.sel === i ? -1 : i; sonido('sel'); dibujar(); return;
   }
-  if (S.sel >= 0 && vecinos(t, S.sel).includes(i)) {
-    const m = { de:S.sel, a:i };
-    if (S.modo === 'online') enviar({ tipo:'mover', de:m.de, a:m.a });
-    hacerMovimiento(m); return;
+  if (S.sel >= 0) {
+    const cont = S.movs.filter(m => m.camino[0] === S.sel && m.camino[1] === i);
+    if (cont.length) { S.camino = [S.sel]; S.sel = -1; avanzarCamino(i, cont); return; }
   }
-  if (t.lago[i]) aviso('No se puede pisar el agua 🌊');
-  else if (S.sel >= 0) aviso('Solo puedes moverte una casilla: adelante, atrás o a los lados');
-  else aviso('Primero toca uno de tus animales 🐾');
-  S.sel = -1; dibujar();
+  if (S.sel >= 0) { S.sel = -1; dibujar(); }
+  else aviso('Toca una de tus fichas primero');
 }
 
-// ================= MOVER Y PELEAR =================
-function hacerMovimiento(m){
-  const lado = S.turno, r = mover(S.t, S.c, m);
-  S.sel = -1; S.ultimo = m;
-  if (!r.batalla) {
-    sonido('paso'); S.c = r.celdas; S.sinBatalla++;
-    despues(lado, r);
-  } else {
-    S.ocupado = true; S.sinBatalla = 0;
-    mostrarBatalla(r.batalla, () => { S.c = r.celdas; S.ocupado = false; despues(lado, r); });
+function avanzarCamino(i, cont){
+  if (!S.camino) S.camino = [S.sel];
+  S.camino.push(i);
+  const terminada = cont.find(m => m.camino.length === S.camino.length);
+  if (terminada && cont.length === 1) { const m = terminada; S.camino = null; jugadaPropia(m); return; }
+  if (terminada && cont.every(m => m.camino.length === S.camino.length)) { S.camino = null; jugadaPropia(terminada); return; }
+  sonido('come'); dibujar(i);
+}
+
+// ================= HACER JUGADAS =================
+function jugadaPropia(m){
+  if (S.modo === 'online') enviar({ tipo:'jugada', camino:m.camino });
+  hacerJugada(m);
+}
+
+function hacerJugada(m){
+  const de = m.camino[0], a = m.camino[m.camino.length - 1], v = S.b[de];
+  S.historial.push({ b:S.b, turno:S.turno, sinAvance:S.sinAvance, ultimo:S.ultimo });
+  const nuevo = aplicar(S.b, m);
+  const corono = !esDama(v) && esDama(nuevo[a]);
+  S.sinAvance = (m.capturas.length || !esDama(v)) ? 0 : S.sinAvance + 1;
+  S.b = nuevo; S.sel = -1; S.camino = null; S.ultimo = m.camino.slice();
+  if (m.capturas.length) sonido('come', m.capturas.length); else sonido('mueve');
+  if (corono) { setTimeout(() => sonido('corona'), 250); aviso('👑 ¡Ficha coronada! Ahora es dama y vuela por las diagonales'); }
+  S.turno = 3 - S.turno;
+  empezarTurno(a);
+}
+
+function empezarTurno(animar = -1){
+  S.movs = movimientos(S.b, S.turno);
+  if (!S.movs.length) { dibujar(animar); return terminar(3 - S.turno, contar(S.b, S.turno) ? 'sinjugadas' : 'sinfichas'); }
+  if (S.sinAvance >= SIN_AVANCE_TABLAS) { dibujar(animar); return terminar(0, 'tablas'); }
+  iniciarReloj();
+  dibujar(animar);
+  if (S.modo === 'maquina' && S.turno !== S.miColor) {
+    S.pensando = true; dibujar(animar);
+    setTimeout(turnoMaquina, 500);
   }
 }
 
-function textoBatalla(b){
-  const A = nombreTipo(b.atk.tipo), D = nombreTipo(b.def.tipo);
-  if (b.def.tipo === 'B') return `¡El ${A} capturó la bandera! 🚩`;
-  if (b.def.tipo === 'T') return b.res === 'gana' ? '¡El Ratón desactivó la trampa! ✂️💣' : `¡BUM! El ${A} cayó en una trampa 💥`;
-  if (b.res === 'empate') return `¡Empate! Los dos ${A}s salen del tablero`;
-  return b.res === 'gana' ? `¡El ${A} (${b.atk.tipo}) le gana al ${D} (${b.def.tipo})!` : `¡El ${D} (${b.def.tipo}) le gana al ${A} (${b.atk.tipo})!`;
+function turnoMaquina(){
+  if (S.modo !== 'maquina' || S.fin) return;
+  const m = elegirJugada(S.b, S.turno, S.nivel);
+  S.pensando = false;
+  if (!S.fin && m) hacerJugada(m);
 }
 
-function mostrarBatalla(b, listo){
-  const carta = (p, lado) => `<div class="carta l${p.lado} ${lado}" id="c_${lado}"><span>${emo(p.tipo)}</span><small>${typeof p.tipo === 'number' ? p.tipo + ' · ' : ''}${nombreTipo(p.tipo)}</small></div>`;
-  const yoAtaco = b.atk.lado === S.vista || S.modo === 'duelo';
-  const [izq, der] = yoAtaco ? [b.atk, b.def] : [b.def, b.atk];
-  $('batCaja').innerHTML = `<div style="font-weight:bold">⚔️ ¡Batalla! ⚔️</div><div class="duelo">${carta(izq, 'izq')}<span class="vs">VS</span>${carta(der, 'der')}</div><p id="batTxt">…</p>`;
-  $('batalla').classList.remove('oculto');
-  sonido('choque');
-  let hecho = false;
-  const terminar = () => { if (hecho) return; hecho = true; $('batalla').classList.add('oculto'); listo(); };
+function deshacer(){
+  if (S.modo !== 'maquina' || S.pensando || S.fin || !S.historial.length) return;
+  let e;
+  do { e = S.historial.pop(); } while (S.historial.length && e.turno !== S.miColor);
+  if (e.turno !== S.miColor) { S.historial.push(e); return; }
+  Object.assign(S, { b:e.b, turno:e.turno, sinAvance:e.sinAvance, ultimo:e.ultimo, sel:-1, camino:null });
+  sonido('sel'); aviso('↶ Jugada deshecha'); empezarTurno();
+}
+
+function terminar(ganador, motivo){
+  S.fin = true; S.pensando = false; pararReloj(); dibujar();
+  const porque = motivo === 'sinfichas' ? 'Se quedó sin fichas.' : motivo === 'sinjugadas' ? 'Se quedó sin jugadas posibles.' : 'Pasaron muchas jugadas sin comer.';
   setTimeout(() => {
-    $('batTxt').textContent = textoBatalla(b);
-    const pierdeAtk = b.res !== 'gana', pierdeDef = b.res !== 'pierde';
-    const ladoAtk = yoAtaco ? 'izq' : 'der', ladoDef = yoAtaco ? 'der' : 'izq';
-    if (pierdeAtk) $('c_' + ladoAtk).classList.add('cae');
-    if (pierdeDef && b.def.tipo !== 'B') $('c_' + ladoDef).classList.add('cae');
-    if (b.def.tipo === 'B') $('c_' + ladoDef).classList.add('cae');
-    if (b.def.tipo === 'T' && b.res === 'pierde') sonido('bum');
-    else { const ganoYo = (b.res === 'gana') === (b.atk.lado === S.vista); sonido(b.res === 'empate' ? 'mal' : ganoYo || S.modo === 'duelo' ? 'bien' : 'mal'); }
-    setTimeout(terminar, 1700);
-  }, 650);
-  $('batalla').onclick = () => { if ($('batTxt').textContent !== '…') terminar(); };
-}
-
-function despues(lado, r){
-  const otro = 3 - lado;
-  if (r.bandera) return fin(lado, 'bandera');
-  if (!movimientos(S.t, S.c, otro).length) return fin(lado, 'sinmov');
-  if (S.sinBatalla >= 80) return fin(0, 'tablas');
-  S.turno = otro;
-  if (S.modo === 'duelo') { pasarTelefono(otro, 'haz tu jugada'); return; }
-  dibujar();
-  if (S.modo === 'aventura' && S.turno === ROJO) { S.ocupado = true; setTimeout(turnoIA, 700); }
-}
-
-function turnoIA(){
-  if (S.modo !== 'aventura' || S.fase !== 'jugar') return;
-  const m = eligeIA(S.t, S.c, ROJO, NIVELES[S.nivel].ia, S.ultIA);
-  S.ultIA = m; S.ocupado = false;
-  if (m) hacerMovimiento(m);
-}
-
-function fin(ganador, motivo){
-  S.fase = 'fin'; S.ocupado = false; S.sel = -1;
-  if (S.modo === 'duelo') S.vista = ganador || AZUL;
-  dibujar();
-  const porque = motivo === 'bandera' ? '¡Capturó la bandera! 🚩' : motivo === 'sinmov' ? 'El otro equipo se quedó sin animales que puedan moverse.' : 'Pasaron muchos turnos sin batallas.';
-  const verTablero = `<button class="btn chico" style="color:#2b6b3a;background:#e4efe0" onclick="cerrarModal()">👀 Ver el tablero</button>`;
-  setTimeout(() => {
-    if (S.modo === 'aventura') {
-      const gano = ganador === AZUL;
-      let est = 0;
-      if (gano) {
-        const perdidos = S.iniciales[AZUL] - contarAnimales(S.c, AZUL);
-        est = 1 + (perdidos <= S.iniciales[AZUL] / 2 ? 1 : 0) + (perdidos <= 2 ? 1 : 0);
-        progreso.estrellas[S.nivel] = Math.max(progreso.estrellas[S.nivel] || 0, est); guardar();
-      }
-      sonido(gano ? 'gana' : 'pierde');
-      const ultimo = S.nivel === NIVELES.length - 1;
-      const titulo = gano ? (ultimo ? '👑 ¡Venciste al General!' : '¡Ganaste! 🎉') : ganador === 0 ? '¡Empate!' : '¡Ganó ' + esc(NIVELES[S.nivel].rival) + '!';
-      const estrellas = `<div class="estrellas">${'⭐'.repeat(est)}<span class="apagada">${'⭐'.repeat(3 - est)}</span></div>`;
-      const sig = gano && !ultimo ? `<button class="btn grande verde" style="width:100%" onclick="cerrarModal();introNivel(${S.nivel + 1})">Siguiente nivel ➜</button>` : '';
-      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : '🚩'}</div><h2>${titulo}</h2>${estrellas}<p>${porque}</p>
-        ${gano ? '' : '<p>¡Inténtalo otra vez! Lee el consejo del nivel.</p>'}
-        <div class="botones">${sig}<button class="btn" onclick="reiniciar()">↻ Jugar otra vez</button>
-        <button class="btn gris" onclick="cerrarModal();irNiveles()">Mapa de niveles</button>${verTablero}</div>`);
-    } else if (S.modo === 'duelo') {
-      sonido('gana');
-      mostrarModal(`<div class="grande-emo">${ganador === AZUL ? '🔵' : ganador === ROJO ? '🔴' : '🤝'}</div>
-        <h2>${ganador ? '¡Ganó el Jugador ' + ganador + '!' : '¡Empate!'}</h2><p>${porque}</p>
-        <div class="botones"><button class="btn" onclick="reiniciar()">🔁 Revancha</button>
-        <button class="btn gris" onclick="salirAlMenu()">Menú</button>${verTablero}</div>`);
+    const gano = ganador === S.miColor;
+    if (ganador) sonido(gano ? 'gana' : 'pierde');
+    if (S.modo === 'maquina') {
+      if (gano) { progreso.victorias[S.nivel]++; guardar(); }
+      const sube = gano && S.nivel < 3 ? `<button class="btn verde" onclick="progreso.nivel=${S.nivel + 1};guardar();cerrarModal();empezarMaquina()">Probar nivel ${NIVELES[S.nivel + 1].n} ${NIVELES[S.nivel + 1].e}</button>` : '';
+      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : ganador ? '🤖' : '🤝'}</div>
+        <h2>${gano ? '¡Ganaste! 🎉' : ganador ? '¡Ganó la máquina!' : '¡Empate!'}</h2>
+        <p>${ganador ? (gano ? 'Tu rival: ' : 'Tú: ') + porque.toLowerCase() : porque}</p>
+        <div class="botones">${sube}<button class="btn" onclick="reiniciar()">↻ Jugar otra vez</button>
+        <button class="btn gris" onclick="cerrarModal();mostrar('config')">Cambiar nivel</button>
+        <button class="btn chico" style="color:#5a3418;background:#efe3c8" onclick="cerrarModal()">👀 Ver el tablero</button></div>`);
     } else if (S.modo === 'online') {
-      const gano = ganador === S.vista;
-      sonido(gano ? 'gana' : 'pierde');
-      const rival = red.rival ? esc(red.rival.nombre) : 'Tu amigo';
-      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : '🚩'}</div>
-        <h2>${gano ? '¡Ganaste! 🎉' : ganador === 0 ? '¡Empate!' : '¡Ganó ' + rival + '!'}</h2><p>${porque}</p>
+      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : ganador ? '😮' : '🤝'}</div>
+        <h2>${gano ? '¡Ganaste! 🎉' : ganador ? '¡Ganó ' + esc(S.rival) + '!' : '¡Empate!'}</h2><p>${porque}</p>
         <div class="botones"><button class="btn naranja" onclick="pedirRevancha()">🔁 Revancha</button>
-        <button class="btn gris" onclick="salirAlMenu()">Menú</button>${verTablero}</div>`);
+        <button class="btn gris" onclick="salirAlMenu()">Menú</button>
+        <button class="btn chico" style="color:#5a3418;background:#efe3c8" onclick="cerrarModal()">👀 Ver el tablero</button></div>`);
     }
-  }, 600);
+  }, 500);
 }
 
 // =====================================================
 //  JUEGO EN LÍNEA CON AMIGOS (conexión directa entre teléfonos con PeerJS)
 // =====================================================
-const PREFIJO = 'captura-la-bandera-v1-';
-const red = { peer:null, conn:null, rival:null, estado:'apagado', tEspera:null, intentos:0, pendiente:null };
+const PREFIJO = 'damas-ninos-v1-';
+const red = { peer:null, conn:null, rival:null, estado:'apagado', tEspera:null, intentos:0 };
 
 function ponerEstado(est, txt){
   red.estado = est;
@@ -662,7 +568,7 @@ async function conectarRed(){
       peer.destroy(); red.peer = null; red.intentos++; ponerEstado('conectando');
       if (red.intentos < 8) setTimeout(conectarRed, 4000); else ponerEstado('error', 'Código ocupado');
     } else if (err.type === 'peer-unavailable') {
-      fallaReto('Tu amigo no está conectado ahora. Pídele que abra el juego y entre a "Jugar con amigos en línea".');
+      fallaReto('Tu amigo no está conectado ahora. Pídele que abra Damas y entre a "Jugar con un amigo en línea".');
     } else if (['network', 'server-error', 'socket-error', 'socket-closed'].includes(err.type)) ponerEstado('error');
   });
 }
@@ -714,9 +620,9 @@ function quitarAmigo(i){
 async function invitar(){
   const enWeb = location.protocol.startsWith('http');
   const url = enWeb ? `${location.origin}${location.pathname}?amigo=${progreso.codigo}&nombre=${encodeURIComponent(progreso.nombre)}` : '';
-  const texto = `¡Juega conmigo a Captura la Bandera! 🚩 Mi código es ${progreso.codigo}.` + (url ? ` Entra aquí: ${url}` : '');
+  const texto = `¡Juega Damas conmigo! ⚫⚪ Mi código es ${progreso.codigo}.` + (url ? ` Entra aquí: ${url}` : '');
   if (navigator.share) {
-    try { await navigator.share({ title:'Captura la Bandera', text:texto }); return; }
+    try { await navigator.share({ title:'Damas', text:texto }); return; }
     catch(e) { if (e.name === 'AbortError') return; }
   }
   try { await navigator.clipboard.writeText(texto); aviso('¡Invitación copiada! Pégala en WhatsApp 📋'); }
@@ -734,7 +640,7 @@ function retar(codigo){
   const c = red.peer.connect(PREFIJO + codigo.toLowerCase(), { reliable:true });
   prepararConexion(c);
   esperando(`Llamando a ${esc(red.rival.nombre)}…`);
-  red.tEspera = setTimeout(() => fallaReto('Tu amigo no responde. Pídele que abra el juego y entre a "Jugar con amigos en línea".'), 15000);
+  red.tEspera = setTimeout(() => fallaReto('Tu amigo no responde. Pídele que abra Damas y entre a "Jugar con un amigo en línea".'), 15000);
   c.on('open', () => { saludar(); enviarReto(); });
 }
 function enviarReto(){
@@ -766,24 +672,14 @@ function prepararConexion(c){
   c.on('close', () => {
     if (red.conn !== c) return;
     red.conn = null; clearTimeout(red.tEspera);
-    if (S.modo === 'online' && S.fase !== 'fin') {
-      S.fase = 'fin'; dibujar();
-      mostrarModal(`<div class="grande-emo">📴</div><p>${esc(red.rival ? red.rival.nombre : 'Tu amigo')} se desconectó.</p>
+    if (S.modo === 'online' && !S.fin) {
+      S.fin = true; pararReloj(); dibujar();
+      mostrarModal(`<div class="grande-emo">📴</div><p>${esc(S.rival)} se desconectó.</p>
         <div class="botones"><button class="btn" onclick="salirAlMenu()">Menú</button></div>`);
     }
   });
   c.on('error', () => {});
 }
-
-// Revisa que el ejército del amigo sea válido (en su zona y con las piezas correctas)
-function ejercitoValido(lista, lado){
-  if (!Array.isArray(lista)) return false;
-  const z = new Set(zona(S.t, lado)), usados = new Set();
-  const esperado = S.cfg.ejercito.map(String).sort().join(), recibido = lista.map(p => String(p && p.tipo)).sort().join();
-  if (esperado !== recibido) return false;
-  return lista.every(p => z.has(p.i) && !usados.has(p.i) && usados.add(p.i));
-}
-
 function recibir(d){
   if (!d || typeof d !== 'object') return;
   if (d.tipo === 'hola') {
@@ -793,50 +689,34 @@ function recibir(d){
   } else if (d.tipo === 'reto') {
     sonido('reto');
     mostrarModal(`<div class="grande-emo">⚔️</div><h2>¡Te retan!</h2>
-      <p><b>${esc(red.rival ? red.rival.nombre : 'Un amigo')}</b> quiere jugar contigo.</p>
+      <p><b>${esc(red.rival ? red.rival.nombre : 'Un amigo')}</b> quiere jugar Damas contigo.</p>
       <div class="botones"><button class="btn grande verde" style="width:100%" onclick="aceptarReto()">¡Aceptar!</button>
       <button class="btn gris" onclick="enviar({tipo:'rechaza'});cerrarModal();setTimeout(cerrarConexion,500)">Ahora no</button></div>`);
   } else if (d.tipo === 'acepta') {
-    clearTimeout(red.tEspera); cerrarModal();
-    empezarOnline(AZUL);
+    clearTimeout(red.tEspera); cerrarModal(); empezarOnline(BLANCAS);
   } else if (d.tipo === 'rechaza') {
     fallaReto(`${esc(red.rival ? red.rival.nombre : 'Tu amigo')} dijo "ahora no". ¡Prueba más tarde!`);
   } else if (d.tipo === 'ocupado') {
     fallaReto('Tu amigo está jugando otra partida. ¡Prueba en un rato!');
-  } else if (d.tipo === 'ejercito') {
-    if (S.modo !== 'online' || S.fase !== 'preparar') { red.pendiente = d.piezas; return; }
-    recibirEjercito(d.piezas);
-  } else if (d.tipo === 'mover') {
-    if (S.modo !== 'online' || S.fase !== 'jugar' || S.turno === S.vista || S.ocupado) return;
-    const de = d.de | 0, a = d.a | 0;
-    if (!movimientos(S.t, S.c, S.turno).some(m => m.de === de && m.a === a)) return;
-    hacerMovimiento({ de, a });
+  } else if (d.tipo === 'jugada') {
+    if (S.modo !== 'online' || S.fin || S.turno === S.miColor || !Array.isArray(d.camino)) return;
+    const m = S.movs.find(x => x.camino.length === d.camino.length && x.camino.every((v, k) => v === d.camino[k]));
+    if (m) hacerJugada(m);   // se ignora cualquier jugada que no sea válida
   }
 }
-function recibirEjercito(piezas){
-  const lado = 3 - S.vista;
-  if (!ejercitoValido(piezas, lado)) return;
-  for (const i of zona(S.t, lado)) S.c[i] = null;
-  ponerEjercito(S.c, lado, piezas);
-  S.listo[lado] = true;
-  if (S.listo[S.vista]) comenzar(); else aviso('¡Tu amigo ya está listo! ⚔️');
-}
-function aceptarReto(){ enviar({ tipo:'acepta' }); cerrarModal(); empezarOnline(ROJO); }
-function empezarOnline(miLado){
-  S.modo = 'online'; S.vista = miLado;
-  const rival = red.rival ? red.rival.nombre : 'Amigo';
+function aceptarReto(){ enviar({ tipo:'acepta' }); cerrarModal(); empezarOnline(ROJAS); }
+function empezarOnline(miColor){
+  S.modo = 'online';
+  S.rival = red.rival ? red.rival.nombre : 'Amigo';
   $('titulo').textContent = '🌎 En línea';
-  $('nom1').textContent = miLado === AZUL ? 'Tú' : rival;
-  $('nom2').textContent = miLado === ROJO ? 'Tú' : rival;
-  nuevaPartida(TABLERO_DUELO);
-  ponerEjercito(S.c, miLado, colocar(S.t, miLado, TABLERO_DUELO.ejercito, false));
-  mostrar('juego'); dibujar();
-  if (red.pendiente) { const p = red.pendiente; red.pendiente = null; recibirEjercito(p); }
-  aviso(miLado === AZUL ? 'Eres AZUL 🔵 Acomoda tu ejército' : 'Eres ROJO 🔴 Acomoda tu ejército', 3000);
+  $('nomAbajo').textContent = 'Tú';
+  $('nomArriba').textContent = S.rival;
+  nuevaPartida(miColor);
+  aviso(miColor === BLANCAS ? 'Juegas con las blancas ⚪ ¡Empiezas tú!' : 'Juegas con las rojas 🔴 Empieza tu amigo', 3000);
 }
 function pedirRevancha(){
   if (!red.conn || !red.conn.open) { fallaReto('Tu amigo ya no está conectado.'); return; }
-  red.pendiente = null; enviarReto();
+  enviarReto();
 }
 
 // ================= INICIO =================

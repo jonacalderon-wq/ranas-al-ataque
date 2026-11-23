@@ -1,163 +1,154 @@
 // =====================================================
-//  Captura la Bandera — reglas del juego y la "mente" de la computadora
+//  Damas — reglas del juego y la "mente" de la máquina
+//  Reglas: las fichas avanzan y comen en diagonal hacia adelante; comer es obligatorio
+//  y se puede comer varias seguidas. Al llegar al otro lado se coronan (dama 👑),
+//  que se mueve y come a cualquier distancia en diagonal (dama voladora).
 // =====================================================
-const AZUL = 1, ROJO = 2;
-const TIPOS = {
-  1: { e: '🐭', n: 'Ratón' }, 2: { e: '🐱', n: 'Gato' }, 3: { e: '🐶', n: 'Perro' },
-  4: { e: '🐺', n: 'Lobo' }, 5: { e: '🐻', n: 'Oso' }, 6: { e: '🦁', n: 'León' },
-  B: { e: '🚩', n: 'Bandera' }, T: { e: '💣', n: 'Trampa' },
-};
+const BLANCAS = 1, ROJAS = 2;
+const VACIO = 0, FB = 1, FR = 2, DB = 3, DR = 4, MUERTA = 9;   // F = ficha, D = dama
+
+const ladoDe = v => (v === FB || v === DB) ? BLANCAS : (v === FR || v === DR) ? ROJAS : 0;
+const esDama = v => v === DB || v === DR;
+const DIAG = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+const direcciones = v => esDama(v) ? DIAG : ladoDe(v) === BLANCAS ? DIAG.slice(0, 2) : DIAG.slice(2);
+const filaCorona = v => ladoDe(v) === BLANCAS ? 0 : 7;
+
+function tableroInicial() {
+  const b = new Array(64).fill(VACIO);
+  for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+    if ((r + c) % 2 !== 1) continue;
+    if (r < 3) b[r * 8 + c] = FR; else if (r > 4) b[r * 8 + c] = FB;
+  }
+  return b;
+}
+
+// Busca todas las cadenas de capturas desde la casilla i
+const dentro = (r, c) => r >= 0 && r <= 7 && c >= 0 && c <= 7;
+
+function saltos(b, i, v, camino, capturas, out) {
+  const r = (i / 8) | 0, c = i % 8, op = 3 - ladoDe(v), dama = esDama(v);
+  let siguio = false;
+  for (const [dr, dc] of direcciones(v)) {
+    // La dama puede ir desde lejos: avanza por casillas vacías hasta encontrar una pieza
+    let k = 1;
+    if (dama) while (dentro(r + k * dr, c + k * dc) && b[(r + k * dr) * 8 + c + k * dc] === VACIO) k++;
+    const rm = r + k * dr, cm = c + k * dc;
+    if (!dentro(rm, cm)) continue;
+    const m = rm * 8 + cm;
+    if (ladoDe(b[m]) !== op) continue;
+    // Casillas donde puede caer después de comer (la ficha normal solo en la siguiente)
+    for (let j = 1; dentro(rm + j * dr, cm + j * dc); j++) {
+      const r2 = rm + j * dr, d = r2 * 8 + cm + j * dc;
+      if (b[d] !== VACIO) break;
+      siguio = true;
+      const b2 = b.slice();
+      b2[i] = VACIO; b2[m] = MUERTA; b2[d] = v;   // la comida queda marcada hasta terminar
+      const cam = [...camino, d], cs = [...capturas, m];
+      if (!dama && r2 === filaCorona(v)) out.push({ camino: cam, capturas: cs });  // al coronar se detiene
+      else saltos(b2, d, v, cam, cs, out);
+      if (!dama) break;
+    }
+  }
+  if (!siguio && capturas.length) out.push({ camino, capturas });
+}
+
+function movimientos(b, jug) {
+  const caps = [];
+  for (let i = 0; i < 64; i++) if (ladoDe(b[i]) === jug) saltos(b, i, b[i], [i], [], caps);
+  if (caps.length) return caps;   // comer es obligatorio
+  const res = [];
+  for (let i = 0; i < 64; i++) {
+    if (ladoDe(b[i]) !== jug) continue;
+    const r = (i / 8) | 0, c = i % 8;
+    for (const [dr, dc] of direcciones(b[i])) {
+      // La ficha avanza una casilla; la dama todas las que estén libres
+      for (let k = 1; dentro(r + k * dr, c + k * dc); k++) {
+        const d = (r + k * dr) * 8 + c + k * dc;
+        if (b[d] !== VACIO) break;
+        res.push({ camino: [i, d], capturas: [] });
+        if (!esDama(b[i])) break;
+      }
+    }
+  }
+  return res;
+}
+
+function aplicar(b, m) {
+  const n = b.slice(), de = m.camino[0], a = m.camino[m.camino.length - 1];
+  let v = n[de];
+  n[de] = VACIO;
+  for (const x of m.capturas) n[x] = VACIO;
+  if (!esDama(v) && ((a / 8) | 0) === filaCorona(v)) v += 2;
+  n[a] = v;
+  return n;
+}
+
+function contar(b, jug) { let n = 0; for (const v of b) if (ladoDe(v) === jug) n++; return n; }
+function mismaJugada(a, b) { return a.camino.length === b.camino.length && a.camino.every((x, k) => x === b.camino[k]); }
+
+// ===== Inteligencia de la máquina =====
+function evaluar(b, jug) {
+  let s = 0;
+  for (let i = 0; i < 64; i++) {
+    const v = b[i]; if (!v) continue;
+    const r = (i / 8) | 0, c = i % 8;
+    let val;
+    if (esDama(v)) val = 250 + (3.5 - Math.abs(3.5 - c)) * 2 + (3.5 - Math.abs(3.5 - r)) * 2;
+    else {
+      const avance = ladoDe(v) === BLANCAS ? 7 - r : r;
+      val = 100 + avance * 4 + (avance === 0 ? 8 : 0) + (c === 0 || c === 7 ? 3 : 0);
+    }
+    s += ladoDe(v) === jug ? val : -val;
+  }
+  return s;
+}
+
+let limite = Infinity;
+function negamax(b, jug, prof, alfa, beta, ext) {
+  if (Date.now() > limite) throw 'tiempo';
+  const movs = movimientos(b, jug);
+  if (!movs.length) return -10000 - prof;   // sin jugadas = pierde
+  if (prof <= 0 && !(movs[0].capturas.length && ext < 6)) return evaluar(b, jug);
+  if (movs.length > 1) movs.sort((x, y) => y.capturas.length - x.capturas.length);
+  let mejor = -Infinity;
+  for (const m of movs) {
+    const v = -negamax(aplicar(b, m), 3 - jug, prof - 1, -beta, -alfa, prof <= 0 ? ext + 1 : ext);
+    if (v > mejor) mejor = v;
+    if (mejor > alfa) alfa = mejor;
+    if (alfa >= beta) break;
+  }
+  return mejor;
+}
 
 function alAzar(a) { return a[Math.floor(Math.random() * a.length)]; }
-function mezclar(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
-function crearTablero(W, H, lagos) {
-  const lago = new Array(W * H).fill(false);
-  for (const [x, y] of lagos) lago[y * W + x] = true;
-  return { W, H, N: W * H, lago };
-}
-
-// Casillas donde cada equipo acomoda su ejército (sus 2 filas de atrás)
-function zona(t, lado) {
-  const filas = lado === AZUL ? [t.H - 2, t.H - 1] : [0, 1], r = [];
-  for (const y of filas) for (let x = 0; x < t.W; x++) r.push(y * t.W + x);
-  return r;
-}
-function filaDeAtras(t, lado) { return zona(t, lado).filter(i => ((i / t.W) | 0) === (lado === AZUL ? t.H - 1 : 0)); }
-
-function vecinos(t, i) {
-  const x = i % t.W, y = (i / t.W) | 0, r = [];
-  if (y > 0) r.push(i - t.W);
-  if (y < t.H - 1) r.push(i + t.W);
-  if (x > 0) r.push(i - 1);
-  if (x < t.W - 1) r.push(i + 1);
-  return r.filter(j => !t.lago[j]);
-}
-function distancia(t, a, b) { return Math.abs(a % t.W - b % t.W) + Math.abs(((a / t.W) | 0) - ((b / t.W) | 0)); }
-
-function seMueve(tipo) { return tipo !== 'B' && tipo !== 'T'; }
-
-// ¿Qué pasa cuando "atk" ataca a "def"?
-function resolver(atk, def) {
-  if (def === 'B') return 'gana';
-  if (def === 'T') return atk === 1 ? 'gana' : 'pierde';
-  return atk > def ? 'gana' : atk < def ? 'pierde' : 'empate';
-}
-
-function movimientos(t, c, lado) {
-  const r = [];
-  for (let i = 0; i < t.N; i++) {
-    const p = c[i];
-    if (!p || p.lado !== lado || !seMueve(p.tipo)) continue;
-    for (const j of vecinos(t, i)) if (!c[j] || c[j].lado !== lado) r.push({ de: i, a: j });
-  }
-  return r;
-}
-
-function mover(t, celdas, m) {
-  const c = celdas.map(p => (p ? { ...p } : null));
-  const p = c[m.de], q = c[m.a];
-  p.movio = true;
-  if (!q) { c[m.a] = p; c[m.de] = null; return { celdas: c, batalla: null, bandera: false }; }
-  const res = resolver(p.tipo, q.tipo);
-  const batalla = { atk: { ...p }, def: { ...q }, res };
-  if (res === 'gana') { p.visto = true; c[m.a] = p; c[m.de] = null; }
-  else if (res === 'pierde') { q.visto = true; c[m.de] = null; }
-  else { c[m.a] = null; c[m.de] = null; }
-  return { celdas: c, batalla, bandera: q.tipo === 'B' && res === 'gana' };
-}
-
-// Acomoda un ejército. Si "listo" es true, esconde la bandera atrás y la rodea de trampas.
-function colocar(t, lado, ejercito, listo) {
-  const z = zona(t, lado), atras = filaDeAtras(t, lado), pos = {};
-  let resto = [...ejercito];
-  const quitar = tp => resto.splice(resto.indexOf(tp), 1);
-  const bi = listo ? alAzar([atras[0], atras[atras.length - 1], ...atras]) : alAzar(atras);
-  pos[bi] = 'B'; quitar('B');
-  if (listo) {
-    for (const j of mezclar(vecinos(t, bi).filter(j => z.includes(j)))) {
-      if (!resto.includes('T')) break;
-      pos[j] = 'T'; quitar('T');
-    }
-  }
-  const libres = mezclar(z.filter(j => pos[j] === undefined));
-  mezclar(resto).forEach((tp, k) => { pos[libres[k]] = tp; });
-  return Object.keys(pos).map(i => ({ i: +i, tipo: pos[i] }));
-}
-
-function ponerEjercito(c, lado, lista) {
-  for (const { i, tipo } of lista) c[i] = { lado, tipo, visto: false, movio: false };
-}
-
-function contarAnimales(c, lado) { return c.filter(p => p && p.lado === lado && seMueve(p.tipo)).length; }
-
-// ===== Inteligencia de la computadora =====
-// Solo usa lo que un jugador puede saber: sus piezas, las del rival que ya se descubrieron
-// y cuáles se han movido (las que se mueven no son bandera ni trampa).
-function valor(tp) { return tp === 'B' ? 100 : tp === 'T' ? 3 : tp === 1 ? 3 : tp === 6 ? 8 : tp; }
-
-function eligeIA(t, c, lado, nivel, anterior) {
-  const movs = movimientos(t, c, lado);
-  if (!movs.length) return null;
-  if (nivel === 0 && Math.random() < 0.35) return alAzar(movs);
-  const op = 3 - lado, ruido = [30, 12, 4, 1][nivel] ?? 4;
-  const miBandera = c.findIndex(p => p && p.lado === lado && p.tipo === 'B');
-  let mejor = -Infinity, elegido = movs[0];
+function buscar(b, jug, movs, prof, ruido) {
+  let mejor = -Infinity, lista = [];
   for (const m of movs) {
-    const p = c[m.de], q = c[m.a];
-    const yDe = (m.de / t.W) | 0, yA = (m.a / t.W) | 0;
-    const avance = lado === ROJO ? yA - yDe : yDe - yA;
-    let s = 0;
-    if (q) {
-      if (q.visto) {
-        const r = resolver(p.tipo, q.tipo);
-        s += r === 'gana' ? 40 + valor(q.tipo) * 5 : r === 'empate' ? 5 + (valor(q.tipo) - valor(p.tipo)) * 5 : -40 - valor(p.tipo) * 5;
-      } else if (!q.movio) {
-        // Pieza que nunca se movió: puede ser bandera o trampa. El ratón es ideal para revisarla.
-        s += p.tipo === 1 ? 30 : p.tipo === 2 ? 8 : -4 * p.tipo;
-      } else {
-        s += (p.tipo - 3) * 7 + (p.tipo <= 2 ? 6 : 0);
-      }
-      if (nivel >= 1 && miBandera >= 0 && distancia(t, m.a, miBandera) <= 2) s += 25;
-    } else {
-      s += avance * (nivel === 0 ? 2 : 4);
-      if (nivel >= 1) {
-        for (const j of vecinos(t, m.a)) {
-          if (j === m.de) continue;
-          const e = c[j];
-          if (!e || e.lado !== op || !seMueve(e.tipo)) continue;
-          if (e.visto) s += resolver(e.tipo, p.tipo) === 'gana' ? -30 - valor(p.tipo) * 4 : 6;
-          else if (e.movio && p.tipo >= 5) s -= 6;
-        }
-        for (const j of vecinos(t, m.de)) {
-          const e = c[j];
-          if (e && e.lado === op && e.visto && seMueve(e.tipo) && resolver(e.tipo, p.tipo) === 'gana') s += 25;
-        }
-      }
-      if (nivel >= 2) {
-        // Acercarse a un objetivo: algo que sabe que puede vencer, o una pieza quieta (¿la bandera?)
-        let objetivo = -1, dMin = Infinity;
-        for (let j = 0; j < t.N; j++) {
-          const e = c[j];
-          if (!e || e.lado !== op) continue;
-          const bueno = e.visto ? resolver(p.tipo, e.tipo) === 'gana'
-                      : !e.movio ? p.tipo <= 2
-                      : p.tipo >= 4;
-          if (!bueno) continue;
-          const d = distancia(t, m.de, j);
-          if (d < dMin) { dMin = d; objetivo = j; }
-        }
-        if (objetivo >= 0) s += (dMin - distancia(t, m.a, objetivo)) * (nivel >= 3 ? 9 : 6);
-        if (p.tipo === 6 && avance > 0) s -= 3;
-      }
-    }
-    if (anterior && m.de === anterior.a && m.a === anterior.de) s -= 12;  // no ir y venir
-    s += Math.random() * ruido;
-    if (s > mejor) { mejor = s; elegido = m; }
+    let v = ruido
+      ? -negamax(aplicar(b, m), 3 - jug, prof - 1, -Infinity, Infinity, 0) + Math.random() * ruido
+      : -negamax(aplicar(b, m), 3 - jug, prof - 1, -Infinity, -(mejor - 1), 0);
+    if (v > mejor) { mejor = v; lista = [m]; } else if (v === mejor) lista.push(m);
   }
-  return elegido;
+  return alAzar(lista);
+}
+
+// nivel: 0 = Fácil, 1 = Medio, 2 = Difícil, 3 = Experto
+function elegirJugada(b, jug, nivel) {
+  const movs = movimientos(b, jug);
+  if (movs.length <= 1) return movs[0] || null;
+  limite = Infinity;
+  if (nivel === 0) return Math.random() < 0.4 ? alAzar(movs) : buscar(b, jug, movs, 1, 60);
+  if (nivel === 1) return buscar(b, jug, movs, 3, 25);
+  if (nivel === 2) return buscar(b, jug, movs, 5, 0);
+  // Experto: piensa cada vez más jugadas adelante mientras le alcance el tiempo
+  let elegida = buscar(b, jug, movs, 4, 0);
+  limite = Date.now() + 1200;
+  try { for (let p = 5; p <= 12; p++) elegida = buscar(b, jug, movs, p, 0); } catch (e) { /* se acabó el tiempo */ }
+  limite = Infinity;
+  return elegida;
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { AZUL, ROJO, TIPOS, crearTablero, zona, vecinos, seMueve, resolver, movimientos, mover, colocar, ponerEjercito, contarAnimales, eligeIA };
+  module.exports = { BLANCAS, ROJAS, VACIO, ladoDe, esDama, tableroInicial, movimientos, aplicar, contar, mismaJugada, elegirJugada };
 }

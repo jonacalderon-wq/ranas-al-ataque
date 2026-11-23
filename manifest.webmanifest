@@ -1,13 +1,13 @@
 {
-  "name": "Captura la Bandera",
-  "short_name": "Bandera",
-  "description": "Juego de estrategia para niños: esconde tu bandera y captura la del rival.",
+  "name": "Damas",
+  "short_name": "Damas",
+  "description": "Damas para niños: contra la máquina (4 niveles) o contra un amigo en línea.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#2b6b3a",
-  "theme_color": "#2b6b3a",
+  "background_color": "#3e2210",
+  "theme_color": "#5a3418",
   "lang": "es",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
