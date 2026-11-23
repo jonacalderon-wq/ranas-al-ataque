@@ -1,5 +1,5 @@
 // Guarda el juego en el teléfono para que funcione sin internet (excepto el modo en línea)
-const CACHE = 'ranas-v1';
+const CACHE = 'bandera-v1';
 const ARCHIVOS = ['./', './index.html', './logica.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARCHIVOS))); self.skipWaiting(); });
 self.addEventListener('activate', e => {

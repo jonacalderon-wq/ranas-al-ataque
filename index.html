@@ -3,107 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Ranas al Ataque</title>
-<meta name="theme-color" content="#1b7a4a">
+<title>Captura la Bandera</title>
+<meta name="theme-color" content="#2b6b3a">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 30% 20%,#2fa6b8,#0e5a6b 70%);color:#fff;overflow:hidden;user-select:none;-webkit-user-select:none}
+body{font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 30% 15%,#5fb35a,#2b6b3a 75%);color:#fff;overflow:hidden;user-select:none;-webkit-user-select:none}
 #app{height:100%;max-width:560px;margin:0 auto;position:relative}
 .pantalla{display:none;height:100%;flex-direction:column;align-items:center;padding:16px;padding-top:max(16px,env(safe-area-inset-top));overflow-y:auto}
 .pantalla.activa{display:flex}
 #menu{justify-content:center;gap:14px}
-h1{font-size:2.4rem;text-shadow:0 4px 0 #0a3d49;text-align:center;line-height:1.1}
-h2.cab{font-size:1.3rem;text-shadow:0 3px 0 #0a3d49;flex:1;text-align:center}
-.sub{opacity:.9;margin-bottom:10px;text-align:center}
-.logo svg{width:130px;height:130px;animation:flota 3s ease-in-out infinite}
-@keyframes flota{50%{transform:translateY(-8px) rotate(-3deg)}}
-.btn{font:inherit;font-weight:bold;border:none;border-radius:18px;padding:12px 18px;background:#4cc94c;color:#fff;box-shadow:0 5px 0 #2a7a2a;cursor:pointer;font-size:1.05rem}
+h1{font-size:2.3rem;text-shadow:0 4px 0 #1b4524;text-align:center;line-height:1.1}
+h2.cab{font-size:1.3rem;text-shadow:0 3px 0 #1b4524;flex:1;text-align:center}
+.sub{opacity:.95;margin-bottom:8px;text-align:center}
+.logo{font-size:5rem;animation:flota 3s ease-in-out infinite;line-height:1}
+@keyframes flota{50%{transform:translateY(-8px) rotate(-4deg)}}
+.btn{font:inherit;font-weight:bold;border:none;border-radius:18px;padding:12px 18px;background:#3d8fe0;color:#fff;box-shadow:0 5px 0 #1f5a99;cursor:pointer;font-size:1.05rem}
 .btn:active{transform:translateY(4px);box-shadow:none}
-.btn.grande{width:min(320px,90%);font-size:1.3rem;padding:16px}
-.btn.morado{background:#a05ad8;box-shadow:0 5px 0 #5b2a85}
-.btn.azul{background:#3d8fe0;box-shadow:0 5px 0 #1f5a99}
+.btn.grande{width:min(320px,90%);font-size:1.25rem;padding:15px}
+.btn.rojo{background:#e0523d;box-shadow:0 5px 0 #8f2a1c}
+.btn.verde{background:#3cb043;box-shadow:0 5px 0 #237027}
 .btn.naranja{background:#f08a2c;box-shadow:0 5px 0 #a3530f}
+.btn.morado{background:#9a5ad8;box-shadow:0 5px 0 #5b2a85}
 .btn.gris{background:#6b7f86;box-shadow:0 5px 0 #3e4d52}
-.btn.amarillo{background:#f2b632;box-shadow:0 5px 0 #a87a12;color:#4a3300}
 .btn.chico{font-size:.95rem;padding:8px 14px;background:rgba(255,255,255,.2);box-shadow:none}
 .btn.icono{width:46px;height:46px;padding:0;font-size:1.4rem;background:rgba(255,255,255,.2);box-shadow:none;flex:none}
 .btn:disabled{opacity:.45}
 .barra{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px}
 /* Niveles */
 .rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;margin:16px 0}
-.nivel{aspect-ratio:1;border-radius:20px;background:#4cc94c;box-shadow:0 5px 0 #2a7a2a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;font-weight:bold;border:none;color:#fff;font-family:inherit;gap:2px}
+.nivel{aspect-ratio:1;border-radius:20px;background:#3d8fe0;box-shadow:0 5px 0 #1f5a99;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;font-weight:bold;border:none;color:#fff;font-family:inherit;gap:2px}
 .nivel:active{transform:translateY(4px);box-shadow:none}
-.nivel small{font-size:.8rem;letter-spacing:1px}
+.nivel small{font-size:.75rem;letter-spacing:1px}
 .nivel.bloq{background:#55707a;box-shadow:0 5px 0 #33464c}
-.nivel.jefe{background:#a05ad8;box-shadow:0 5px 0 #5b2a85}
-.total{background:rgba(0,0,0,.2);padding:6px 14px;border-radius:14px;font-weight:bold}
+.nivel.jefe{background:#e0523d;box-shadow:0 5px 0 #8f2a1c}
+.total{background:rgba(0,0,0,.2);padding:6px 12px;border-radius:14px;font-weight:bold;white-space:nowrap}
 /* Ayuda y En línea */
-.tarjeta{background:rgba(255,255,255,.14);border-radius:18px;padding:14px;width:100%;margin-top:12px;line-height:1.45}
-.tarjeta b{color:#fff36b}
+.tarjeta{background:rgba(0,0,0,.16);border-radius:18px;padding:14px;width:100%;margin-top:12px;line-height:1.45}
+.tarjeta b{color:#ffe66b}
 .tarjeta h3{margin-bottom:6px}
 .paso{display:flex;gap:10px;align-items:flex-start}
-.paso .num{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:#0e5a6b;font-weight:bold;display:flex;align-items:center;justify-content:center}
-.codigo{font-size:2.2rem;font-weight:bold;letter-spacing:5px;background:#fffdf3;color:#1b7a4a;border-radius:14px;padding:6px 10px;text-align:center;margin:8px 0;user-select:text;-webkit-user-select:text}
+.paso .num{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:#2b6b3a;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.animales{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.animales div{background:rgba(255,255,255,.15);border-radius:12px;padding:6px;text-align:center;font-size:.85rem}
+.animales span{font-size:1.8rem;display:block}
+.codigo{font-size:2.2rem;font-weight:bold;letter-spacing:5px;background:#fffdf3;color:#2b6b3a;border-radius:14px;padding:6px 10px;text-align:center;margin:8px 0;user-select:text;-webkit-user-select:text}
 .fila{display:flex;gap:8px;width:100%;align-items:center}
-input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-radius:14px;padding:12px;background:#fffdf3;color:#21413f;text-transform:none}
-.estado{display:inline-flex;align-items:center;gap:6px;font-size:.9rem;background:rgba(0,0,0,.2);border-radius:12px;padding:4px 10px}
+input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-radius:14px;padding:12px;background:#fffdf3;color:#21413f}
+.estado{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;background:rgba(0,0,0,.2);border-radius:12px;padding:4px 10px;white-space:nowrap}
 .punto{width:10px;height:10px;border-radius:50%;background:#aaa}
 .punto.listo{background:#5df05d}.punto.conectando{background:#ffd84a}.punto.error{background:#ff6b6b}
 .amigo{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.18);border-radius:14px;padding:8px 10px;margin-top:8px}
 .amigo .info{flex:1;min-width:0}
 .amigo .info b{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .amigo .info small{opacity:.8;letter-spacing:2px}
-.amigo .mini svg{width:36px;height:36px;display:block}
-.nota{font-size:.82rem;opacity:.85;margin-top:8px}
+.nota{font-size:.82rem;opacity:.9;margin-top:8px}
 /* Juego */
-#juego{padding:10px;gap:10px;padding-top:max(10px,env(safe-area-inset-top))}
-#titulo{font-weight:bold;font-size:1.1rem;text-align:center;flex:1}
-.marcador{display:flex;width:100%;align-items:center;justify-content:space-between;background:rgba(0,0,0,.18);border-radius:18px;padding:8px 10px}
-.equipo{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:14px;transition:.3s;border:3px solid transparent;min-width:0}
-.equipo .mini svg{width:34px;height:34px;display:block}
-.equipo b{font-size:1.6rem}
-.equipo small{font-size:.8rem;opacity:.9;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.equipo.activo{background:rgba(255,255,255,.2);border-color:#fff}
-#turnoTxt{font-size:.85rem;text-align:center;flex:1;padding:0 4px}
-#tablero{display:grid;width:min(100%,calc(100vh - 250px));gap:3px;background:rgba(0,40,55,.35);padding:6px;border-radius:16px;touch-action:manipulation}
-.celda{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.celda::before{content:"";position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7fd67a,#3e9d45);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
-.celda.roca::before{display:none}
-.piedra{position:absolute;inset:10%;border-radius:40% 45% 35% 50%;background:radial-gradient(circle at 35% 30%,#b9b2a6,#6d665c);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)}
-.ficha{position:relative;width:88%;height:88%;z-index:1}
-.ficha svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 2px rgba(0,0,0,.3))}
-.celda.sel .ficha{animation:brinca .6s ease-in-out infinite}
-.celda.sel::before{background:radial-gradient(circle,#fff6a8,#e8c934)}
-@keyframes brinca{50%{transform:translateY(-10%) scale(1.08)}}
-.celda.obj1::after,.celda.obj2::after{content:"";position:absolute;border-radius:50%;z-index:2;pointer-events:none}
-.celda.obj1::after{width:34%;height:34%;background:rgba(255,255,255,.9);box-shadow:0 0 0 3px #2a7a2a}
-.celda.obj2::after{width:46%;height:46%;border:4px dashed #ffd84a}
-.celda.ultimo::before{box-shadow:0 0 0 3px #e2b8ff,inset 0 -3px 0 rgba(0,0,0,.2)}
-.celda.pista::before{animation:brilla 1s infinite}
-@keyframes brilla{50%{box-shadow:0 0 0 5px #fff36b,0 0 18px #fff36b}}
-.pop{animation:pop .4s cubic-bezier(.3,1.6,.5,1)}
-@keyframes pop{from{transform:scale(0)}}
-.voltea{animation:voltea .5s ease}
-@keyframes voltea{50%{transform:rotateY(90deg) scale(1.25)}}
+#juego{padding:8px 10px;gap:7px;padding-top:max(8px,env(safe-area-inset-top))}
+#titulo{font-weight:bold;font-size:1.05rem;text-align:center;flex:1}
+.marcador{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px}
+.equipo{flex:1;display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:14px;border:3px solid transparent;transition:.3s;min-width:0}
+.equipo.e1{background:rgba(61,143,224,.55)}.equipo.e2{background:rgba(224,82,61,.55);justify-content:flex-end}
+.equipo.activo{border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.6)}
+.equipo b{font-size:1.3rem}
+.equipo small{font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#guia{width:100%;background:#fffdf3;color:#21413f;border-radius:14px;padding:8px 12px;font-weight:bold;text-align:center;font-size:.95rem;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+#tablero{display:grid;gap:3px;background:#7a5a33;padding:5px;border-radius:14px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.celda{position:relative;aspect-ratio:1;border-radius:8px;background:#8fd16f;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.celda:nth-child(odd){background:#84c866}
+.celda.lago{background:linear-gradient(135deg,#4fb3e8,#2a86c4)!important;font-size:1.2rem}
+.celda.mizona{box-shadow:inset 0 0 0 3px rgba(255,255,255,.65)}
+.pieza{position:absolute;inset:7%;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 rgba(0,0,0,.3);z-index:1}
+.pieza.l1{background:linear-gradient(#5aa5ee,#2f7bc8)}
+.pieza.l2{background:linear-gradient(#ef6f5b,#c43c28)}
+.pieza .emo{font-size:min(7vw,1.9rem);line-height:1}
+.pieza.oculta .emo{font-size:min(7vw,1.8rem);font-weight:bold;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.3)}
+.pieza b{position:absolute;right:-3px;bottom:-4px;background:#fff;color:#222;border-radius:50%;width:1.35em;height:1.35em;font-size:.8rem;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.pieza .ojo{position:absolute;left:-3px;top:-4px;font-size:.7rem;background:#ffe66b;border-radius:50%;width:1.4em;height:1.4em;display:flex;align-items:center;justify-content:center}
+.celda.sel .pieza{animation:brinca .6s ease-in-out infinite;box-shadow:0 0 0 3px #ffe66b,0 3px 0 rgba(0,0,0,.3)}
+@keyframes brinca{50%{transform:translateY(-8%) scale(1.07)}}
+.celda.obj::after{content:"";position:absolute;width:32%;height:32%;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 3px #3d8fe0;z-index:2;pointer-events:none}
+.celda.ataque::after{content:"⚔️";position:absolute;z-index:3;font-size:1.1rem;width:62%;height:62%;border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:latido .8s infinite}
+.celda.ataque.gana::after{background:rgba(60,176,67,.9);box-shadow:0 0 0 3px #fff}
+.celda.ataque.pierde::after{background:rgba(224,60,40,.9);box-shadow:0 0 0 3px #fff}
+.celda.ataque.empate::after,.celda.ataque.duda::after{background:rgba(245,190,40,.95);box-shadow:0 0 0 3px #fff}
+@keyframes latido{50%{transform:scale(1.12)}}
+.celda.ultimo{box-shadow:inset 0 0 0 3px #ffe66b}
+.celda.cambio .pieza{box-shadow:0 0 0 3px #ffe66b}
+.leyenda{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;font-size:.85rem;background:rgba(0,0,0,.18);border-radius:12px;padding:6px 8px}
+.leyenda span{white-space:nowrap}
 .acciones{display:flex;gap:10px}
+/* Batalla */
+#batalla{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:35;padding:20px}
+#batalla.oculto{display:none}
+.bat{background:#fffdf3;color:#21413f;border-radius:24px;padding:20px;text-align:center;width:min(360px,100%);animation:pop .3s}
+.duelo{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px 0 12px}
+.carta{width:92px;height:110px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:bold;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:.4s}
+.carta.l1{background:linear-gradient(#5aa5ee,#2f7bc8)}.carta.l2{background:linear-gradient(#ef6f5b,#c43c28)}
+.carta span{font-size:2.8rem;line-height:1.1}
+.carta small{font-size:.85rem}
+.carta.izq{animation:chocaI .5s ease}.carta.der{animation:chocaD .5s ease}
+@keyframes chocaI{50%{transform:translateX(18px) rotate(8deg)}}
+@keyframes chocaD{50%{transform:translateX(-18px) rotate(-8deg)}}
+.carta.cae{transform:scale(.6) rotate(-20deg);opacity:.25}
+.vs{font-size:2rem}
+.bat p{font-size:1.15rem;font-weight:bold}
 /* Aviso y ventana */
-#aviso{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(200%);background:#fff;color:#0e5a6b;font-weight:bold;padding:12px 18px;border-radius:16px;width:max-content;max-width:90%;text-align:center;transition:.3s;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:40}
+#aviso{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(200%);background:#fff;color:#2b6b3a;font-weight:bold;padding:12px 18px;border-radius:16px;width:max-content;max-width:90%;text-align:center;transition:.3s;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:40}
 #aviso.ver{transform:translateX(-50%) translateY(0)}
-#modal{position:fixed;inset:0;background:rgba(0,30,40,.6);display:flex;align-items:center;justify-content:center;z-index:30;padding:20px}
+#modal{position:fixed;inset:0;background:rgba(10,40,20,.6);display:flex;align-items:center;justify-content:center;z-index:30;padding:20px}
+#modal.opaco{background:#2b6b3a}
 #modal.oculto{display:none}
 .caja{background:#fffdf3;color:#21413f;border-radius:24px;padding:22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.2);animation:pop .35s;max-height:90vh;overflow-y:auto}
-.caja h2{font-size:1.6rem;margin-bottom:8px;color:#1b7a4a}
+.caja h2{font-size:1.5rem;margin-bottom:8px;color:#2b6b3a}
 .caja p{margin:8px 0;line-height:1.4}
 .caja .botones{display:flex;flex-direction:column;gap:12px;margin-top:16px}
-.caja .mini svg{width:70px;height:70px}
+.caja .grande-emo{font-size:3.5rem;line-height:1.1}
 .estrellas{font-size:2.6rem;letter-spacing:4px;margin:6px 0}
 .apagada{filter:grayscale(1);opacity:.3}
-.reglas{font-size:.85rem;background:#eef7e9;border-radius:12px;padding:8px 10px;text-align:left;line-height:1.5}
+.reglas{font-size:.88rem;background:#eef7e9;border-radius:12px;padding:8px 10px;text-align:left;line-height:1.55}
 .consejo{background:#fff4cc;border-radius:12px;padding:10px;font-weight:bold;color:#6b4a00}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
 </style>
 </head>
 <body>
@@ -111,13 +134,13 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
 
   <!-- MENÚ -->
   <section id="menu" class="pantalla activa">
-    <div class="logo" id="logo"></div>
-    <h1>Ranas al Ataque</h1>
-    <p class="sub">¡El juego de estrategia del estanque!</p>
+    <div class="logo">🚩</div>
+    <h1>Captura la Bandera</h1>
+    <p class="sub">¡Esconde tu bandera y encuentra la del rival!</p>
     <button class="btn grande" onclick="irNiveles()">🗺️ Aventura</button>
     <button class="btn grande naranja" onclick="irEnLinea()">🌎 Jugar con amigos en línea</button>
-    <button class="btn grande morado" onclick="iniciarDuelo()">👫 Duelo en el mismo teléfono</button>
-    <button class="btn grande azul" onclick="mostrar('ayuda')">❓ Cómo jugar</button>
+    <button class="btn grande morado" onclick="iniciarDuelo()">👫 Dos jugadores, un teléfono</button>
+    <button class="btn grande verde" onclick="mostrar('ayuda')">❓ Cómo jugar</button>
     <button class="btn chico" id="btnSonido" onclick="alternarSonido()">🔊 Sonido: sí</button>
   </section>
 
@@ -128,7 +151,7 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
       <h2 class="cab">Aventura</h2>
       <span class="total" id="totalEstrellas">⭐ 0</span>
     </div>
-    <p class="sub" style="margin-top:10px">Los sapos morados invadieron el estanque. ¡Recupéralo hoja por hoja!</p>
+    <p class="sub" style="margin-top:10px">Vence a cada rival capturando su bandera 🚩</p>
     <div class="rejilla" id="rejilla"></div>
   </section>
 
@@ -136,19 +159,17 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
   <section id="enlinea" class="pantalla">
     <div class="barra">
       <button class="btn icono" onclick="mostrar('menu')">←</button>
-      <h2 class="cab">Amigos en línea</h2>
+      <h2 class="cab">Amigos</h2>
       <span class="estado"><span class="punto" id="puntoRed"></span><span id="txtRed">Apagado</span></span>
     </div>
-
     <div class="tarjeta" id="tarjetaNombre" style="display:none">
       <h3>¿Cómo te llamamos en el juego?</h3>
       <p class="nota" style="margin:0 0 8px">Usa un apodo, no tu nombre completo.</p>
       <div class="fila">
         <input class="campo" id="inNombre" maxlength="12" placeholder="Tu apodo" autocomplete="off">
-        <button class="btn" onclick="guardarNombre()">Listo</button>
+        <button class="btn verde" onclick="guardarNombre()">Listo</button>
       </div>
     </div>
-
     <div id="zonaRed" style="width:100%;display:none">
       <div class="tarjeta">
         <h3>Hola, <span id="miNombre"></span> 👋</h3>
@@ -159,15 +180,13 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
           <button class="btn chico" onclick="cambiarNombre()">✏️</button>
         </div>
       </div>
-
       <div class="tarjeta">
         <h3>Agregar un amigo</h3>
         <div class="fila">
           <input class="campo" id="inCodigo" maxlength="12" placeholder="Código de tu amigo" autocomplete="off" style="text-transform:uppercase">
-          <button class="btn" onclick="agregarAmigoManual()">Agregar</button>
+          <button class="btn verde" onclick="agregarAmigoManual()">Agregar</button>
         </div>
       </div>
-
       <div class="tarjeta">
         <h3>Mis amigos</h3>
         <div id="listaAmigos"></div>
@@ -184,13 +203,21 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
       <h2 class="cab">Cómo jugar</h2>
       <span style="width:46px"></span>
     </div>
-    <div class="tarjeta paso"><span class="num">1</span><div>Tú eres las <b>ranas verdes</b>. Tu rival son los <b>sapos morados</b>. Gana quien tenga <b>más animales</b> al final.</div></div>
-    <div class="tarjeta paso"><span class="num">2</span><div>Toca una de tus ranas. Aparecen marcas en las hojas:<br>⚪ <b>Punto blanco</b> (1 paso): tu rana <b>se copia</b>. ¡Aparece una rana nueva!<br>🟡 <b>Círculo amarillo</b> (2 pasos): tu rana <b>salta</b>. Llega más lejos, pero deja su hoja vacía.</div></div>
-    <div class="tarjeta paso"><span class="num">3</span><div>Cuando tu rana cae en una hoja, <b>todos los sapos pegados a ella</b> (también en diagonal) <b>se vuelven ranas verdes</b>. ¡Pero el rival puede hacer lo mismo contigo!</div></div>
-    <div class="tarjeta paso"><span class="num">4</span><div>Las <b>rocas</b> no se pueden pisar, pero sí se pueden saltar.</div></div>
-    <div class="tarjeta paso"><span class="num">5</span><div>El juego termina cuando el estanque se llena, cuando un equipo se queda sin animales, o cuando alguien no puede moverse (las hojas libres son para el otro).</div></div>
-    <div class="tarjeta"><h3>⭐ Estrellas en la Aventura</h3>⭐ Ganar el nivel<br>⭐⭐ Ganar con <b>el doble</b> de animales que el rival<br>⭐⭐⭐ Lo anterior <b>sin usar pistas</b></div>
-    <div class="tarjeta"><h3>🧠 Truco de estratega</h3>Antes de mover, piensa: <b>¿qué hará mi rival después?</b> Copiar suele ser mejor que saltar, porque no dejas huecos.</div>
+    <div class="tarjeta paso"><span class="num">1</span><div><b>Objetivo:</b> atrapa la 🚩 <b>bandera</b> del rival antes de que él atrape la tuya.</div></div>
+    <div class="tarjeta paso"><span class="num">2</span><div>Tú ves tus animales. Los del rival están <b>escondidos</b> ❓ hasta que pelean.</div></div>
+    <div class="tarjeta paso"><span class="num">3</span><div>En tu turno mueves <b>un animal una casilla</b>: adelante, atrás o a los lados. No se puede pisar el agua 🌊.</div></div>
+    <div class="tarjeta paso"><span class="num">4</span><div>Si llegas a la casilla de un rival, <b>pelean</b>: <b>gana el número más grande</b>. Si son iguales, salen los dos.
+      <div class="animales">
+        <div><span>🐭</span>1 Ratón</div><div><span>🐱</span>2 Gato</div><div><span>🐶</span>3 Perro</div>
+        <div><span>🐺</span>4 Lobo</div><div><span>🐻</span>5 Oso</div><div><span>🦁</span>6 León</div>
+      </div></div></div>
+    <div class="tarjeta paso"><span class="num">5</span><div>La 💣 <b>trampa</b> no se mueve y vence a todos… <b>¡menos al 🐭 Ratón, que la desactiva!</b></div></div>
+    <div class="tarjeta paso"><span class="num">6</span><div>Antes de atacar, el tablero te avisa:<br>🟢 vas a ganar · 🔴 vas a perder · 🟡 no se sabe.</div></div>
+    <div class="tarjeta"><h3>🧠 Trucos de estratega</h3>
+      • Esconde tu 🚩 atrás y rodéala de 💣.<br>
+      • Las piezas que <b>nunca se mueven</b> pueden ser la bandera… ¡o una trampa! Mándales un 🐭.<br>
+      • Usa animales pequeños para descubrir a los rivales y guarda al 🦁 para el final.<br>
+      • Cuando un animal pelea queda descubierto 👁. ¡Recuerda quién es quién!</div>
     <div style="height:20px"></div>
   </section>
 
@@ -202,14 +229,19 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
       <button class="btn icono" id="btnReiniciar" onclick="reiniciar()">↻</button>
     </div>
     <div class="marcador">
-      <div class="equipo" id="eq1"><span class="mini" id="mini1"></span><div><b id="n1">2</b><br><small id="nom1">Tú</small></div></div>
-      <div id="turnoTxt"></div>
-      <div class="equipo" id="eq2"><div style="text-align:right"><b id="n2">2</b><br><small id="nom2">Sapos</small></div><span class="mini" id="mini2"></span></div>
+      <div class="equipo e1" id="eq1"><span>🔵</span><small id="nom1">Tú</small><b id="n1">0</b></div>
+      <div class="equipo e2" id="eq2"><b id="n2">0</b><small id="nom2">Rival</small><span>🔴</span></div>
     </div>
+    <div id="guia"></div>
     <div id="tablero"></div>
-    <div class="acciones"><button class="btn amarillo" id="btnPista" onclick="usarPista()">💡 Pista (3)</button></div>
+    <div class="acciones" id="accPreparar">
+      <button class="btn chico" onclick="mezclarMio()">🔀 Mezclar</button>
+      <button class="btn verde" onclick="estoyListo()">✅ ¡Listo, a jugar!</button>
+    </div>
+    <div class="leyenda"><span>🐭1</span><span>🐱2</span><span>🐶3</span><span>🐺4</span><span>🐻5</span><span>🦁6</span><span>💣 vence a todos menos 🐭</span></div>
   </section>
 
+  <div id="batalla" class="oculto"><div class="bat" id="batCaja"></div></div>
   <div id="modal" class="oculto"><div class="caja" id="modalCaja"></div></div>
   <div id="aviso"></div>
 </div>
@@ -217,46 +249,29 @@ input.campo{font:inherit;font-size:1.1rem;flex:1;min-width:0;border:none;border-
 <script src="logica.js"></script>
 <script>
 // ================= NIVELES =================
+const COMPLETO = ['B','T','T',1,1,2,2,3,3,4,5,6];
+const LAGOS_8 = [[1,3],[1,4],[4,3],[4,4]];
 const NIVELES = [
-  { nombre:'El primer salto', ia:0, consejo:'Toca una rana verde y luego una hoja con punto blanco. ¡Tu rana se copia!',
-    mapa:['P...C','.....','.....','.....','C...P'] },
-  { nombre:'La roca del centro', ia:0, consejo:'Los círculos amarillos son saltos: llegas más lejos, pero dejas tu hoja vacía.',
-    mapa:['P...C','.....','..#..','.....','C...P'] },
-  { nombre:'¡A convertir!', ia:1, consejo:'Si caes junto a varios sapos, ¡todos se vuelven verdes! Busca la hoja rodeada de más sapos.',
-    mapa:['P....C','......','..##..','..##..','......','C....P'] },
-  { nombre:'Cuatro piedras', ia:1, consejo:'Copiar suele ser mejor que saltar: así no dejas huecos.',
-    mapa:['P....C','.#..#.','......','......','.#..#.','C....P'] },
-  { nombre:'El gran estanque', ia:2, consejo:'Este sapo siempre busca comer. Antes de mover, mira si podrá recuperar tus ranas.',
-    mapa:['P.....C','.......','.......','...#...','.......','.......','C.....P'] },
-  { nombre:'Equipo unido', ia:2, consejo:'Mantén tus ranas juntas, como un equipo. Los huecos entre ellas son peligrosos.',
-    mapa:['P.....C','..#.#..','.......','.#...#.','.......','..#.#..','C.....P'] },
-  { nombre:'La gran cruz', ia:3, consejo:'Este sapo ya piensa una jugada adelante. Las rocas se pueden saltar: úsalas para escapar.',
-    mapa:['P..#..C','...#...','.......','###.###','.......','...#...','C..#..P'] },
-  { nombre:'Esquinas seguras', ia:3, consejo:'En las esquinas y bordes te pueden atacar desde menos lados.',
-    mapa:['P..#..C','.#...#.','.......','#..#..#','.......','.#...#.','C..#..P'] },
-  { nombre:'Los muros', ia:3, consejo:'Piensa dos jugadas adelante: ¿qué hará el sapo después de tu jugada?',
-    mapa:['P.....C','.#####.','.......','.#.#.#.','.......','.#####.','C.....P'] },
-  { nombre:'El diamante', ia:4, consejo:'A veces es mejor ganar 2 ranas seguras que 4 que perderás en el siguiente turno.',
-    mapa:['P..#..C','..#.#..','.#...#.','#.....#','.#...#.','..#.#..','C..#..P'] },
-  { nombre:'Estanque gigante', ia:3, consejo:'Tablero enorme. Avanza poco a poco, sin dejar huecos detrás.',
-    mapa:['P......C','........','..#..#..','...##...','...##...','..#..#..','........','C......P'] },
-  { nombre:'👑 El Rey Sapo', ia:4, consejo:'El jefe final piensa tres jugadas adelante. ¡Usa todo lo que aprendiste!',
-    mapa:['P..##..C','.#....#.','...##...','#.#..#.#','#.#..#.#','...##...','.#....#.','C..##..P'] },
+  { nombre:'Primer combate', rival:'Pepe el Novato', ia:0, W:5, H:6, lagos:[], ejercito:['B',2,3,4,5],
+    consejo:'Mueve tus animales hacia el rival. Si chocan, ¡gana el número más grande! Busca la 🚩 escondida.' },
+  { nombre:'¡Cuidado con las trampas!', rival:'Toña la Tramposa', ia:0, W:5, H:6, lagos:[], ejercito:['B','T',1,2,3,4,5],
+    consejo:'La 💣 trampa vence a todos… ¡menos al 🐭 Ratón, que la desactiva!' },
+  { nombre:'El lago', rival:'Capitán Charco', ia:1, W:6, H:7, lagos:[[2,3],[3,3]], ejercito:['B','T','T',1,1,2,3,4,6],
+    consejo:'Nadie puede pisar el agua 🌊. Una pieza que nunca se mueve puede ser la bandera… ¡o una trampa!' },
+  { nombre:'Buena memoria', rival:'Lola Lista', ia:1, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
+    consejo:'Cuando un animal pelea queda descubierto 👁. ¡Recuerda quién es quién!' },
+  { nombre:'Esconde tu bandera', rival:'Zorro Astuto', ia:2, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
+    consejo:'Este rival busca tu bandera. Ponla atrás y rodéala de 💣 trampas.' },
+  { nombre:'Espías', rival:'Agente Búho', ia:2, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
+    consejo:'Usa animales pequeños para descubrir a los rivales y guarda al 🦁 para el final.' },
+  { nombre:'👑 El General', rival:'General Bigotes', ia:3, W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO,
+    consejo:'El jefe final piensa muy bien sus jugadas. ¡Usa todo lo que aprendiste!' },
 ];
-const MAPAS_DUELO = [4, 5, 7, 9];
-const NOMBRE_COLOR = {1:'Verde', 2:'Morado'};
-
-// ================= DIBUJOS =================
-function ranaSVG(tipo){
-  const [col, osc] = tipo === VERDE ? ['#4cc94c','#2a7a2a'] : ['#a05ad8','#5b2a85'];
-  const manchas = tipo === MORADO ? `<circle cx="38" cy="72" r="5" fill="${osc}" opacity=".5"/><circle cx="64" cy="76" r="4" fill="${osc}" opacity=".5"/><circle cx="55" cy="84" r="3" fill="${osc}" opacity=".5"/>` : '';
-  return `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="62" rx="38" ry="30" fill="${col}"/>${manchas}<circle cx="31" cy="33" r="15" fill="${col}"/><circle cx="69" cy="33" r="15" fill="${col}"/><circle cx="31" cy="32" r="9" fill="#fff"/><circle cx="69" cy="32" r="9" fill="#fff"/><circle cx="33" cy="33" r="4.5" fill="#222"/><circle cx="67" cy="33" r="4.5" fill="#222"/><path d="M34 62 Q50 74 66 62" stroke="${osc}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="24" cy="56" r="5" fill="#ff8fa3" opacity=".6"/><circle cx="76" cy="56" r="5" fill="#ff8fa3" opacity=".6"/></svg>`;
-}
-const SVG = {1: ranaSVG(VERDE), 2: ranaSVG(MORADO)};
+const TABLERO_DUELO = { W:6, H:8, lagos:LAGOS_8, ejercito:COMPLETO };
 
 // ================= ALMACENAMIENTO =================
-function cargar(){ try { return JSON.parse(localStorage.getItem('ranas_progreso')) || {}; } catch(e){ return {}; } }
-function guardar(){ try { localStorage.setItem('ranas_progreso', JSON.stringify(progreso)); } catch(e){} }
+function cargar(){ try { return JSON.parse(localStorage.getItem('bandera_progreso')) || {}; } catch(e){ return {}; } }
+function guardar(){ try { localStorage.setItem('bandera_progreso', JSON.stringify(progreso)); } catch(e){} }
 const progreso = cargar();
 if (!progreso.estrellas) progreso.estrellas = {};
 if (progreso.sonido === undefined) progreso.sonido = true;
@@ -277,8 +292,10 @@ function mostrar(id, empujar = true){
 window.addEventListener('popstate', () => { if (S.modo === 'online') cerrarConexion(); S.modo = null; cerrarModal(); mostrar('menu', false); });
 let tAviso = null;
 function aviso(txt, ms = 2600){ const a = $('aviso'); a.textContent = txt; a.classList.add('ver'); clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove('ver'), ms); }
-function mostrarModal(html){ $('modalCaja').innerHTML = html; $('modal').classList.remove('oculto'); }
+function mostrarModal(html, opaco = false){ $('modalCaja').innerHTML = html; $('modal').classList.toggle('opaco', opaco); $('modal').classList.remove('oculto'); }
 function cerrarModal(){ $('modal').classList.add('oculto'); }
+const nombreTipo = tp => TIPOS[tp].n;
+const emo = tp => TIPOS[tp].e;
 
 // ================= SONIDO =================
 let ctxAudio = null;
@@ -293,11 +310,13 @@ function tono(f, d, tipo = 'sine', vol = .15, ret = 0, fFin = 0){
     o.connect(g); g.connect(ctxAudio.destination); o.start(t0); o.stop(t0 + d + .05);
   } catch(e){}
 }
-function sonido(t, n = 1){
+function sonido(t){
   if (t === 'sel') tono(660, .08, 'triangle', .1);
-  if (t === 'copia') { tono(520, .1); tono(780, .12, 'sine', .12, .07); }
-  if (t === 'salto') tono(300, .25, 'triangle', .15, 0, 900);
-  if (t === 'captura') for (let i = 0; i < Math.min(n, 6); i++) tono(500 + i * 120, .12, 'square', .05, .12 + i * .07);
+  if (t === 'paso') tono(420, .09, 'triangle', .12);
+  if (t === 'choque') { tono(180, .2, 'square', .08); tono(120, .25, 'sawtooth', .06, .05); }
+  if (t === 'bum') tono(200, .6, 'sawtooth', .15, 0, 40);
+  if (t === 'bien') [600, 900].forEach((f, i) => tono(f, .15, 'triangle', .12, i * .1));
+  if (t === 'mal') [350, 250].forEach((f, i) => tono(f, .2, 'square', .06, i * .12));
   if (t === 'gana') [523, 659, 784, 1047].forEach((f, i) => tono(f, .25, 'triangle', .15, i * .13));
   if (t === 'pierde') [400, 340, 280].forEach((f, i) => tono(f, .3, 'sawtooth', .06, i * .18));
   if (t === 'reto') [700, 900, 700, 900].forEach((f, i) => tono(f, .12, 'square', .06, i * .14));
@@ -305,23 +324,22 @@ function sonido(t, n = 1){
 function alternarSonido(){ progreso.sonido = !progreso.sonido; guardar(); pintarSonido(); sonido('sel'); }
 function pintarSonido(){ $('btnSonido').textContent = progreso.sonido ? '🔊 Sonido: sí' : '🔇 Sonido: no'; }
 
-// ================= ESTADO DE LA PARTIDA =================
-const S = { modo:null, nivel:0, mapa:0, t:null, c:null, turno:VERDE, sel:-1, pistas:3, pistasUsadas:0,
-            ocupado:false, terminado:false, anim:{nuevo:-1, cap:[]}, ultimo:null, pista:null, miColor:VERDE };
+// ================= ESTADO =================
+// Coordenadas: el azul empieza abajo y el rojo arriba. Cada jugador ve su ejército abajo (el rojo ve el tablero girado).
+const S = { modo:null, nivel:0, cfg:null, t:null, c:null, turno:AZUL, vista:AZUL, fase:'preparar', sel:-1,
+            ocupado:false, ultimo:null, listo:{1:false,2:false}, sinBatalla:0, ultIA:null, iniciales:{1:0,2:0} };
 
-function prepararPartida(mapa){
-  const b = crearTablero(mapa);
-  Object.assign(S, { t:b.t, c:b.c, turno:VERDE, sel:-1, pistas:3, pistasUsadas:0, ocupado:false, terminado:false,
-                     anim:{nuevo:-1, cap:[]}, ultimo:null, pista:null });
+function nuevaPartida(cfg){
+  S.cfg = cfg; S.t = crearTablero(cfg.W, cfg.H, cfg.lagos); S.c = new Array(S.t.N).fill(null);
+  Object.assign(S, { turno:AZUL, fase:'preparar', sel:-1, ocupado:false, ultimo:null, listo:{1:false,2:false}, sinBatalla:0, ultIA:null });
+  S.iniciales = { 1: cfg.ejercito.filter(seMueve).length, 2: cfg.ejercito.filter(seMueve).length };
+  $('btnReiniciar').style.display = S.modo === 'online' ? 'none' : '';
   const tb = $('tablero');
   tb.style.gridTemplateColumns = `repeat(${S.t.W},1fr)`;
-  tb.style.aspectRatio = `${S.t.W} / ${S.t.H}`;
-  $('mini1').innerHTML = SVG[VERDE]; $('mini2').innerHTML = SVG[MORADO];
-  $('btnPista').style.display = S.modo === 'aventura' ? '' : 'none';
-  $('btnReiniciar').style.display = S.modo === 'online' ? 'none' : '';
-  mostrar('juego');
-  dibujar();
+  tb.style.width = `min(100%, calc((100vh - 330px) * ${S.t.W / S.t.H}))`;
 }
+const canon = d => S.vista === AZUL ? d : S.t.N - 1 - d;
+const nombreLado = lado => lado === AZUL ? $('nom1').textContent : $('nom2').textContent;
 
 // ---- Aventura ----
 function irNiveles(){
@@ -334,42 +352,56 @@ function irNiveles(){
     html += `<button class="${cls}" onclick="${abierto ? `introNivel(${i})` : `aviso('Gana el nivel anterior para abrir este 🔒')`}">${abierto ? i + 1 : '🔒'}<small>${abierto ? est : ''}</small></button>`;
   });
   $('rejilla').innerHTML = html;
-  $('totalEstrellas').textContent = `⭐ ${total} / ${NIVELES.length * 3}`;
+  $('totalEstrellas').textContent = `⭐ ${total}/${NIVELES.length * 3}`;
   mostrar('niveles');
 }
 function introNivel(i){
   const n = NIVELES[i];
-  mostrarModal(`<div class="mini">${SVG[MORADO]}</div><h2>Nivel ${i + 1}<br>${esc(n.nombre)}</h2>
+  mostrarModal(`<div class="grande-emo">🔴</div><h2>Nivel ${i + 1}: ${esc(n.nombre)}</h2>
+    <p>Tu rival: <b>${esc(n.rival)}</b></p>
     <p class="consejo">💡 ${esc(n.consejo)}</p>
-    <div class="reglas">⭐ Gana el nivel<br>⭐⭐ Gana con el doble de ranas<br>⭐⭐⭐ Lo anterior sin usar pistas</div>
-    <div class="botones"><button class="btn grande" style="width:100%" onclick="cerrarModal();empezarNivel(${i})">¡Jugar!</button>
+    <div class="reglas">⭐ Captura la bandera<br>⭐⭐ Gana sin perder la mitad de tus animales<br>⭐⭐⭐ Gana perdiendo 2 animales o menos</div>
+    <div class="botones"><button class="btn grande verde" style="width:100%" onclick="cerrarModal();empezarNivel(${i})">¡Jugar!</button>
     <button class="btn gris" onclick="cerrarModal()">Volver</button></div>`);
 }
 function empezarNivel(i){
-  S.modo = 'aventura'; S.nivel = i; S.miColor = VERDE;
+  S.modo = 'aventura'; S.nivel = i; S.vista = AZUL;
+  const n = NIVELES[i];
   $('titulo').textContent = `Nivel ${i + 1}`;
-  $('nom1').textContent = 'Tú'; $('nom2').textContent = 'Sapos';
-  prepararPartida(NIVELES[i].mapa);
+  $('nom1').textContent = 'Tú'; $('nom2').textContent = n.rival;
+  nuevaPartida(n);
+  ponerEjercito(S.c, ROJO, colocar(S.t, ROJO, n.ejercito, n.ia >= 2));
+  ponerEjercito(S.c, AZUL, colocar(S.t, AZUL, n.ejercito, false));
+  mostrar('juego'); dibujar();
 }
 
-// ---- Duelo local ----
-function iniciarDuelo(mapa){
-  S.modo = 'duelo'; S.miColor = VERDE;
-  S.mapa = mapa !== undefined ? mapa : MAPAS_DUELO[Math.floor(Math.random() * MAPAS_DUELO.length)];
-  $('titulo').textContent = 'Duelo';
-  $('nom1').textContent = 'Verde'; $('nom2').textContent = 'Morado';
-  prepararPartida(NIVELES[S.mapa].mapa);
+// ---- Dos jugadores en un teléfono ----
+function iniciarDuelo(){
+  S.modo = 'duelo'; S.vista = AZUL;
+  $('titulo').textContent = 'Dos jugadores';
+  $('nom1').textContent = 'Jugador 1'; $('nom2').textContent = 'Jugador 2';
+  nuevaPartida(TABLERO_DUELO);
+  ponerEjercito(S.c, AZUL, colocar(S.t, AZUL, TABLERO_DUELO.ejercito, false));
+  ponerEjercito(S.c, ROJO, colocar(S.t, ROJO, TABLERO_DUELO.ejercito, false));
+  mostrar('juego');
+  pasarTelefono(AZUL, 'prepara tu ejército');
+}
+function pasarTelefono(lado, que){
+  S.vista = lado; S.sel = -1;
+  mostrarModal(`<div class="grande-emo">${lado === AZUL ? '🔵' : '🔴'}</div><h2>Jugador ${lado}</h2>
+    <p>Toma el teléfono y ${que}.</p><p style="font-size:.9rem">El otro jugador no debe mirar 🙈</p>
+    <div class="botones"><button class="btn grande ${lado === AZUL ? '' : 'rojo'}" style="width:100%" onclick="cerrarModal();dibujar()">Soy el Jugador ${lado}, ¡mostrar!</button></div>`, true);
 }
 
 function reiniciar(){
   cerrarModal();
   if (S.modo === 'aventura') empezarNivel(S.nivel);
-  else if (S.modo === 'duelo') iniciarDuelo(S.mapa);
+  else if (S.modo === 'duelo') iniciarDuelo();
 }
 function salirAlMenu(){
-  if (S.modo === 'online' && !S.terminado) {
+  if (S.modo === 'online' && S.fase !== 'fin') {
     mostrarModal(`<h2>¿Salir de la partida?</h2><p>Tu amigo ganará si te vas.</p><div class="botones">
-      <button class="btn naranja" onclick="cerrarModal();cerrarConexion();S.modo=null;mostrar('menu')">Sí, salir</button>
+      <button class="btn rojo" onclick="cerrarModal();cerrarConexion();S.modo=null;mostrar('menu')">Sí, salir</button>
       <button class="btn gris" onclick="cerrarModal()">Seguir jugando</button></div>`);
     return;
   }
@@ -377,181 +409,232 @@ function salirAlMenu(){
   S.modo = null; cerrarModal(); mostrar('menu');
 }
 
-// ================= DIBUJAR TABLERO =================
-function dibujar(){
-  const { t, c } = S, obj = {};
-  if (S.sel >= 0) {
-    for (const j of t.v1[S.sel]) if (c[j] === VACIO) obj[j] = 1;
-    for (const j of t.v2[S.sel]) if (c[j] === VACIO) obj[j] = 2;
+// ================= PREPARAR EL EJÉRCITO =================
+function mezclarMio(){
+  if (S.fase !== 'preparar' || S.listo[S.vista]) return;
+  for (const i of zona(S.t, S.vista)) S.c[i] = null;
+  ponerEjercito(S.c, S.vista, colocar(S.t, S.vista, S.cfg.ejercito, false));
+  S.sel = -1; sonido('sel'); dibujar();
+}
+function ejercitoDe(lado){ return zona(S.t, lado).filter(i => S.c[i]).map(i => ({ i, tipo:S.c[i].tipo })); }
+
+function estoyListo(){
+  if (S.fase !== 'preparar' || S.listo[S.vista]) return;
+  S.sel = -1; S.listo[S.vista] = true; sonido('bien');
+  if (S.modo === 'aventura') { S.listo[ROJO] = true; comenzar(); }
+  else if (S.modo === 'duelo') {
+    if (S.vista === AZUL) pasarTelefono(ROJO, 'prepara tu ejército');
+    else { comenzar(); pasarTelefono(AZUL, '¡empieza la batalla!'); }
+  } else if (S.modo === 'online') {
+    enviar({ tipo:'ejercito', piezas:ejercitoDe(S.vista) });
+    if (S.listo[3 - S.vista]) comenzar(); else dibujar();
   }
-  let html = '';
-  for (let i = 0; i < c.length; i++) {
-    const v = c[i]; let cls = 'celda', dentro = '';
-    if (v === ROCA) { cls += ' roca'; dentro = '<div class="piedra"></div>'; }
-    if (i === S.sel) cls += ' sel';
-    if (obj[i]) cls += ' obj' + obj[i];
-    if (S.ultimo && (i === S.ultimo.de || i === S.ultimo.a)) cls += ' ultimo';
-    if (S.pista && (i === S.pista.de || i === S.pista.a)) cls += ' pista';
-    if (v === VERDE || v === MORADO) {
-      const a = i === S.anim.nuevo ? ' pop' : S.anim.cap.includes(i) ? ' voltea' : '';
-      dentro = `<div class="ficha${a}">${SVG[v]}</div>`;
+}
+function comenzar(){
+  S.fase = 'jugar'; S.turno = AZUL; S.sel = -1;
+  dibujar();
+  if (S.modo !== 'duelo') aviso(S.turno === S.vista ? '¡Empiezas tú! Mueve un animal 🐾' : 'Empieza tu rival', 2500);
+}
+
+// ================= DIBUJAR =================
+function guia(){
+  if (S.fase === 'fin') return '¡Fin de la partida! Ahora puedes ver todas las piezas.';
+  if (S.fase === 'preparar') {
+    if (S.listo[S.vista]) return '⏳ Esperando a que tu amigo acomode su ejército…';
+    return S.sel >= 0 ? 'Ahora toca otra casilla de tu zona para cambiarlas de lugar 🔄'
+                      : 'Acomoda tu ejército: toca dos casillas para cambiarlas. ¡Esconde bien tu 🚩!';
+  }
+  if (S.turno !== S.vista && S.modo !== 'duelo') return S.modo === 'aventura' ? `🤔 ${NIVELES[S.nivel].rival} está pensando…` : `⏳ Turno de ${nombreLado(S.turno)}`;
+  if (S.sel < 0) return 'Tu turno: toca uno de tus animales 🐾';
+  return 'Toca una casilla marcada · ⚔️🟢 ganas · ⚔️🔴 pierdes · ⚔️🟡 no se sabe';
+}
+
+function dibujar(){
+  const { t, c } = S, objetivos = {};
+  if (S.fase === 'jugar' && S.sel >= 0) {
+    const yo = c[S.sel];
+    for (const j of vecinos(t, S.sel)) {
+      const q = c[j];
+      if (!q) objetivos[j] = 'obj';
+      else if (q.lado !== yo.lado) objetivos[j] = 'ataque ' + (q.visto ? resolver(yo.tipo, q.tipo) : 'duda');
     }
-    html += `<div class="${cls}" data-i="${i}">${dentro}</div>`;
+  }
+  const miZona = S.fase === 'preparar' && !S.listo[S.vista] ? new Set(zona(t, S.vista)) : null;
+  let html = '';
+  for (let d = 0; d < t.N; d++) {
+    const i = canon(d), p = c[i];
+    let cls = 'celda', dentro = '';
+    if (t.lago[i]) { cls += ' lago'; dentro = '🌊'; }
+    if (miZona && miZona.has(i)) cls += ' mizona';
+    if (i === S.sel) cls += S.fase === 'preparar' ? ' cambio sel' : ' sel';
+    if (objetivos[i]) cls += ' ' + objetivos[i];
+    if (S.ultimo && S.fase === 'jugar' && (i === S.ultimo.de || i === S.ultimo.a)) cls += ' ultimo';
+    if (p) {
+      const veo = p.lado === S.vista || p.visto || S.fase === 'fin';
+      if (veo) {
+        const num = typeof p.tipo === 'number' ? `<b>${p.tipo}</b>` : '';
+        const ojo = p.lado === S.vista && p.visto && S.fase !== 'fin' ? '<span class="ojo">👁</span>' : '';
+        dentro = `<div class="pieza l${p.lado}"><span class="emo">${emo(p.tipo)}</span>${num}${ojo}</div>`;
+      } else dentro = `<div class="pieza l${p.lado} oculta"><span class="emo">?</span></div>`;
+    }
+    html += `<div class="${cls}" data-d="${d}">${dentro}</div>`;
   }
   $('tablero').innerHTML = html;
-  S.anim = { nuevo:-1, cap:[] };
-
-  const [, n1, n2] = contar(c);
-  $('n1').textContent = n1; $('n2').textContent = n2;
-  $('eq1').classList.toggle('activo', !S.terminado && S.turno === VERDE);
-  $('eq2').classList.toggle('activo', !S.terminado && S.turno === MORADO);
-  let txt = '';
-  if (S.terminado) txt = '¡Fin!';
-  else if (S.modo === 'aventura') txt = S.turno === VERDE ? 'Tu turno' : 'El sapo piensa… 🤔';
-  else if (S.modo === 'duelo') txt = 'Turno de ' + NOMBRE_COLOR[S.turno];
-  else txt = S.turno === S.miColor ? 'Tu turno' : 'Turno de ' + (red.rival ? red.rival.nombre : 'tu amigo');
-  $('turnoTxt').textContent = txt;
-  $('btnPista').textContent = `💡 Pista (${S.pistas})`;
-  $('btnPista').disabled = S.pistas <= 0 || S.turno !== VERDE || S.terminado;
+  $('n1').textContent = contarAnimales(c, AZUL) + ' 🐾';
+  $('n2').textContent = contarAnimales(c, ROJO) + ' 🐾';
+  $('eq1').classList.toggle('activo', S.fase === 'jugar' && S.turno === AZUL);
+  $('eq2').classList.toggle('activo', S.fase === 'jugar' && S.turno === ROJO);
+  $('guia').textContent = guia();
+  $('accPreparar').style.display = S.fase === 'preparar' && !S.listo[S.vista] ? '' : 'none';
 }
 
 $('tablero').addEventListener('click', e => {
   const el = e.target.closest('.celda');
-  if (el) tocar(+el.dataset.i);
+  if (el) tocar(canon(+el.dataset.d));
 });
 
-function puedoTocar(){
-  if (S.ocupado || S.terminado) return false;
-  if (S.modo === 'aventura') return S.turno === VERDE;
-  if (S.modo === 'online') return S.turno === S.miColor;
-  return true;
-}
-
 function tocar(i){
-  if (!puedoTocar()) { if (S.modo === 'online' && !S.terminado) aviso('Espera tu turno ⏳', 1200); return; }
-  const v = S.c[i];
-  if (v === S.turno) { S.sel = S.sel === i ? -1 : i; sonido('sel'); dibujar(); return; }
-  if (S.sel >= 0 && v === VACIO) {
-    const d = distancia(S.t, S.sel, i);
-    if (d === 1 || d === 2) {
-      const m = { de:S.sel, a:i, salto:d === 2 };
-      if (S.modo === 'online') enviar({ tipo:'jugada', de:m.de, a:m.a });
-      jugar(m);
-      return;
-    }
-    aviso('Esa hoja está muy lejos. Solo puedes llegar a 1 o 2 pasos.');
-  } else if (S.sel < 0 && v === VACIO) aviso('Primero toca una de tus ranas 🐸');
-  if (S.sel >= 0) { S.sel = -1; dibujar(); }
+  if (S.ocupado) return;
+  const { t, c } = S, p = c[i];
+  if (S.fase === 'preparar') {
+    if (S.listo[S.vista]) return;
+    if (!zona(t, S.vista).includes(i)) { aviso('Solo puedes acomodar en tu zona (las casillas con borde blanco)'); return; }
+    if (S.sel < 0) { if (p) { S.sel = i; sonido('sel'); } }
+    else { [c[S.sel], c[i]] = [c[i], c[S.sel]]; S.sel = -1; sonido('paso'); }
+    dibujar(); return;
+  }
+  if (S.fase !== 'jugar') return;
+  if (S.turno !== S.vista || (S.modo === 'aventura' && S.turno !== AZUL)) { aviso('Espera tu turno ⏳', 1200); return; }
+  if (p && p.lado === S.turno) {
+    if (!seMueve(p.tipo)) { aviso(p.tipo === 'B' ? 'La 🚩 bandera no se mueve. ¡Protégela!' : 'La 💣 trampa no se mueve.'); S.sel = -1; dibujar(); return; }
+    S.sel = S.sel === i ? -1 : i; sonido('sel'); dibujar(); return;
+  }
+  if (S.sel >= 0 && vecinos(t, S.sel).includes(i)) {
+    const m = { de:S.sel, a:i };
+    if (S.modo === 'online') enviar({ tipo:'mover', de:m.de, a:m.a });
+    hacerMovimiento(m); return;
+  }
+  if (t.lago[i]) aviso('No se puede pisar el agua 🌊');
+  else if (S.sel >= 0) aviso('Solo puedes moverte una casilla: adelante, atrás o a los lados');
+  else aviso('Primero toca uno de tus animales 🐾');
+  S.sel = -1; dibujar();
 }
 
-function jugar(m){
-  const jug = S.turno, r = aplicar(S.t, S.c, m, jug);
-  S.c = r.c; S.sel = -1; S.pista = null;
-  S.ultimo = (S.modo === 'aventura' && jug === VERDE) ? null : m;
-  S.anim = { nuevo:m.a, cap:r.cap };
-  sonido(m.salto ? 'salto' : 'copia');
-  if (r.cap.length) sonido('captura', r.cap.length);
-  S.turno = 3 - jug;
+// ================= MOVER Y PELEAR =================
+function hacerMovimiento(m){
+  const lado = S.turno, r = mover(S.t, S.c, m);
+  S.sel = -1; S.ultimo = m;
+  if (!r.batalla) {
+    sonido('paso'); S.c = r.celdas; S.sinBatalla++;
+    despues(lado, r);
+  } else {
+    S.ocupado = true; S.sinBatalla = 0;
+    mostrarBatalla(r.batalla, () => { S.c = r.celdas; S.ocupado = false; despues(lado, r); });
+  }
+}
+
+function textoBatalla(b){
+  const A = nombreTipo(b.atk.tipo), D = nombreTipo(b.def.tipo);
+  if (b.def.tipo === 'B') return `¡El ${A} capturó la bandera! 🚩`;
+  if (b.def.tipo === 'T') return b.res === 'gana' ? '¡El Ratón desactivó la trampa! ✂️💣' : `¡BUM! El ${A} cayó en una trampa 💥`;
+  if (b.res === 'empate') return `¡Empate! Los dos ${A}s salen del tablero`;
+  return b.res === 'gana' ? `¡El ${A} (${b.atk.tipo}) le gana al ${D} (${b.def.tipo})!` : `¡El ${D} (${b.def.tipo}) le gana al ${A} (${b.atk.tipo})!`;
+}
+
+function mostrarBatalla(b, listo){
+  const carta = (p, lado) => `<div class="carta l${p.lado} ${lado}" id="c_${lado}"><span>${emo(p.tipo)}</span><small>${typeof p.tipo === 'number' ? p.tipo + ' · ' : ''}${nombreTipo(p.tipo)}</small></div>`;
+  const yoAtaco = b.atk.lado === S.vista || S.modo === 'duelo';
+  const [izq, der] = yoAtaco ? [b.atk, b.def] : [b.def, b.atk];
+  $('batCaja').innerHTML = `<div style="font-weight:bold">⚔️ ¡Batalla! ⚔️</div><div class="duelo">${carta(izq, 'izq')}<span class="vs">VS</span>${carta(der, 'der')}</div><p id="batTxt">…</p>`;
+  $('batalla').classList.remove('oculto');
+  sonido('choque');
+  let hecho = false;
+  const terminar = () => { if (hecho) return; hecho = true; $('batalla').classList.add('oculto'); listo(); };
+  setTimeout(() => {
+    $('batTxt').textContent = textoBatalla(b);
+    const pierdeAtk = b.res !== 'gana', pierdeDef = b.res !== 'pierde';
+    const ladoAtk = yoAtaco ? 'izq' : 'der', ladoDef = yoAtaco ? 'der' : 'izq';
+    if (pierdeAtk) $('c_' + ladoAtk).classList.add('cae');
+    if (pierdeDef && b.def.tipo !== 'B') $('c_' + ladoDef).classList.add('cae');
+    if (b.def.tipo === 'B') $('c_' + ladoDef).classList.add('cae');
+    if (b.def.tipo === 'T' && b.res === 'pierde') sonido('bum');
+    else { const ganoYo = (b.res === 'gana') === (b.atk.lado === S.vista); sonido(b.res === 'empate' ? 'mal' : ganoYo || S.modo === 'duelo' ? 'bien' : 'mal'); }
+    setTimeout(terminar, 1700);
+  }, 650);
+  $('batalla').onclick = () => { if ($('batTxt').textContent !== '…') terminar(); };
+}
+
+function despues(lado, r){
+  const otro = 3 - lado;
+  if (r.bandera) return fin(lado, 'bandera');
+  if (!movimientos(S.t, S.c, otro).length) return fin(lado, 'sinmov');
+  if (S.sinBatalla >= 80) return fin(0, 'tablas');
+  S.turno = otro;
+  if (S.modo === 'duelo') { pasarTelefono(otro, 'haz tu jugada'); return; }
   dibujar();
-  revisarEstado();
-}
-
-function revisarEstado(){
-  const [e, n1, n2] = contar(S.c);
-  if (n1 === 0 || n2 === 0 || e === 0) return terminar();
-  if (!movimientos(S.t, S.c, S.turno).length) {
-    const otro = 3 - S.turno;
-    const quien = nombreDe(S.turno), paraQuien = nombreDe(otro);
-    aviso(`${quien} no puede moverse. ¡Las hojas libres son para ${paraQuien}!`, 3000);
-    S.ocupado = true;
-    setTimeout(() => {
-      const cap = [];
-      for (let i = 0; i < S.c.length; i++) if (S.c[i] === VACIO) { S.c[i] = otro; cap.push(i); }
-      S.anim = { nuevo:-1, cap }; dibujar(); terminar();
-    }, 1400);
-    return;
-  }
-  if (S.modo === 'aventura' && S.turno === MORADO) {
-    S.ocupado = true;
-    setTimeout(turnoIA, 650);
-  }
-}
-
-function nombreDe(color){
-  if (S.modo === 'aventura') return color === VERDE ? 'Tu equipo' : 'El sapo';
-  if (S.modo === 'online') return color === S.miColor ? 'Tu equipo' : (red.rival ? red.rival.nombre : 'Tu amigo');
-  return NOMBRE_COLOR[color];
+  if (S.modo === 'aventura' && S.turno === ROJO) { S.ocupado = true; setTimeout(turnoIA, 700); }
 }
 
 function turnoIA(){
-  if (S.modo !== 'aventura' || S.terminado) return;
-  const m = elegirJugada(S.t, S.c, MORADO, NIVELES[S.nivel].ia);
-  S.ocupado = false;
-  if (m) jugar(m);
+  if (S.modo !== 'aventura' || S.fase !== 'jugar') return;
+  const m = eligeIA(S.t, S.c, ROJO, NIVELES[S.nivel].ia, S.ultIA);
+  S.ultIA = m; S.ocupado = false;
+  if (m) hacerMovimiento(m);
 }
 
-function usarPista(){
-  if (S.pistas <= 0 || !puedoTocar() || S.modo !== 'aventura') return;
-  const m = elegirJugada(S.t, S.c, VERDE, 3);
-  if (!m) return;
-  S.pista = m; S.sel = m.de; S.pistas--; S.pistasUsadas++;
-  sonido('sel'); dibujar();
-  aviso(m.salto ? 'Prueba saltar con la rana brillante 🟡' : 'Prueba copiar la rana brillante ⚪');
-}
-
-function terminar(){
-  S.terminado = true; S.ocupado = false; dibujar();
-  const [, n1, n2] = contar(S.c);
-  const marcador = `<p style="font-size:1.3rem;font-weight:bold">🟢 ${n1} &nbsp;—&nbsp; ${n2} 🟣</p>`;
+function fin(ganador, motivo){
+  S.fase = 'fin'; S.ocupado = false; S.sel = -1;
+  if (S.modo === 'duelo') S.vista = ganador || AZUL;
+  dibujar();
+  const porque = motivo === 'bandera' ? '¡Capturó la bandera! 🚩' : motivo === 'sinmov' ? 'El otro equipo se quedó sin animales que puedan moverse.' : 'Pasaron muchos turnos sin batallas.';
+  const verTablero = `<button class="btn chico" style="color:#2b6b3a;background:#e4efe0" onclick="cerrarModal()">👀 Ver el tablero</button>`;
   setTimeout(() => {
     if (S.modo === 'aventura') {
-      const gano = n1 > n2;
+      const gano = ganador === AZUL;
       let est = 0;
       if (gano) {
-        est = 1 + (n1 >= 2 * n2 ? 1 : 0);
-        if (est === 2 && S.pistasUsadas === 0) est = 3;
+        const perdidos = S.iniciales[AZUL] - contarAnimales(S.c, AZUL);
+        est = 1 + (perdidos <= S.iniciales[AZUL] / 2 ? 1 : 0) + (perdidos <= 2 ? 1 : 0);
         progreso.estrellas[S.nivel] = Math.max(progreso.estrellas[S.nivel] || 0, est); guardar();
       }
       sonido(gano ? 'gana' : 'pierde');
       const ultimo = S.nivel === NIVELES.length - 1;
-      const titulo = gano ? (ultimo ? '👑 ¡Venciste al Rey Sapo!' : '¡Ganaste! 🎉') : n1 === n2 ? '¡Empate!' : '¡Los sapos ganaron!';
-      const msg = gano ? (ultimo ? '¡Recuperaste todo el estanque! Eres un gran estratega.' : '¡Muy buena estrategia!') : 'No te rindas, ¡inténtalo otra vez! Usa una pista si la necesitas.';
+      const titulo = gano ? (ultimo ? '👑 ¡Venciste al General!' : '¡Ganaste! 🎉') : ganador === 0 ? '¡Empate!' : '¡Ganó ' + esc(NIVELES[S.nivel].rival) + '!';
       const estrellas = `<div class="estrellas">${'⭐'.repeat(est)}<span class="apagada">${'⭐'.repeat(3 - est)}</span></div>`;
-      const sig = gano && !ultimo ? `<button class="btn grande" style="width:100%" onclick="cerrarModal();introNivel(${S.nivel + 1})">Siguiente nivel ➜</button>` : '';
-      mostrarModal(`<div class="mini">${SVG[gano ? VERDE : MORADO]}</div><h2>${titulo}</h2>${estrellas}${marcador}<p>${msg}</p>
-        <div class="botones">${sig}<button class="btn azul" onclick="reiniciar()">↻ Jugar otra vez</button>
-        <button class="btn gris" onclick="cerrarModal();irNiveles()">Mapa de niveles</button></div>`);
+      const sig = gano && !ultimo ? `<button class="btn grande verde" style="width:100%" onclick="cerrarModal();introNivel(${S.nivel + 1})">Siguiente nivel ➜</button>` : '';
+      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : '🚩'}</div><h2>${titulo}</h2>${estrellas}<p>${porque}</p>
+        ${gano ? '' : '<p>¡Inténtalo otra vez! Lee el consejo del nivel.</p>'}
+        <div class="botones">${sig}<button class="btn" onclick="reiniciar()">↻ Jugar otra vez</button>
+        <button class="btn gris" onclick="cerrarModal();irNiveles()">Mapa de niveles</button>${verTablero}</div>`);
     } else if (S.modo === 'duelo') {
       sonido('gana');
-      const g = n1 > n2 ? VERDE : n2 > n1 ? MORADO : 0;
-      mostrarModal(`${g ? `<div class="mini">${SVG[g]}</div>` : ''}<h2>${g ? '¡Ganó ' + NOMBRE_COLOR[g] + '!' : '¡Empate!'}</h2>${marcador}
+      mostrarModal(`<div class="grande-emo">${ganador === AZUL ? '🔵' : ganador === ROJO ? '🔴' : '🤝'}</div>
+        <h2>${ganador ? '¡Ganó el Jugador ' + ganador + '!' : '¡Empate!'}</h2><p>${porque}</p>
         <div class="botones"><button class="btn" onclick="reiniciar()">🔁 Revancha</button>
-        <button class="btn gris" onclick="salirAlMenu()">Menú</button></div>`);
+        <button class="btn gris" onclick="salirAlMenu()">Menú</button>${verTablero}</div>`);
     } else if (S.modo === 'online') {
-      const mios = S.miColor === VERDE ? n1 : n2, suyos = S.miColor === VERDE ? n2 : n1;
-      const gano = mios > suyos;
+      const gano = ganador === S.vista;
       sonido(gano ? 'gana' : 'pierde');
       const rival = red.rival ? esc(red.rival.nombre) : 'Tu amigo';
-      mostrarModal(`<div class="mini">${SVG[gano ? S.miColor : 3 - S.miColor]}</div>
-        <h2>${gano ? '¡Ganaste! 🎉' : mios === suyos ? '¡Empate!' : '¡Ganó ' + rival + '!'}</h2>${marcador}
+      mostrarModal(`<div class="grande-emo">${gano ? '🏆' : '🚩'}</div>
+        <h2>${gano ? '¡Ganaste! 🎉' : ganador === 0 ? '¡Empate!' : '¡Ganó ' + rival + '!'}</h2><p>${porque}</p>
         <div class="botones"><button class="btn naranja" onclick="pedirRevancha()">🔁 Revancha</button>
-        <button class="btn gris" onclick="salirAlMenu()">Menú</button></div>`);
+        <button class="btn gris" onclick="salirAlMenu()">Menú</button>${verTablero}</div>`);
     }
-  }, 700);
+  }, 600);
 }
 
 // =====================================================
 //  JUEGO EN LÍNEA CON AMIGOS (conexión directa entre teléfonos con PeerJS)
 // =====================================================
-const PREFIJO = 'ranas-al-ataque-v1-';
-const red = { peer:null, conn:null, rival:null, estado:'apagado', tEspera:null, mapa:0, intentos:0 };
+const PREFIJO = 'captura-la-bandera-v1-';
+const red = { peer:null, conn:null, rival:null, estado:'apagado', tEspera:null, intentos:0, pendiente:null };
 
 function ponerEstado(est, txt){
   red.estado = est;
-  const p = $('puntoRed'); p.className = 'punto ' + est;
+  $('puntoRed').className = 'punto ' + est;
   $('txtRed').textContent = txt || ({ listo:'Conectado', conectando:'Conectando…', error:'Sin conexión', apagado:'Apagado' }[est]);
 }
-
 function cargarPeerJS(){
   return new Promise((ok, mal) => {
     if (window.Peer) return ok();
@@ -561,7 +644,6 @@ function cargarPeerJS(){
     document.head.appendChild(s);
   });
 }
-
 async function conectarRed(){
   if (red.peer && !red.peer.destroyed) return;
   ponerEstado('conectando');
@@ -577,24 +659,15 @@ async function conectarRed(){
   });
   peer.on('error', err => {
     if (err.type === 'unavailable-id') {
-      // Normalmente pasa cuando la sesión anterior aún no se cerró: esperamos y reintentamos
-      peer.destroy(); red.peer = null; red.intentos++;
-      ponerEstado('conectando');
+      peer.destroy(); red.peer = null; red.intentos++; ponerEstado('conectando');
       if (red.intentos < 8) setTimeout(conectarRed, 4000); else ponerEstado('error', 'Código ocupado');
     } else if (err.type === 'peer-unavailable') {
-      fallaReto('Tu amigo no está conectado ahora. Pídele que abra Ranas al Ataque y entre a "Jugar con amigos en línea".');
-    } else if (['network', 'server-error', 'socket-error', 'socket-closed'].includes(err.type)) {
-      ponerEstado('error');
-    }
+      fallaReto('Tu amigo no está conectado ahora. Pídele que abra el juego y entre a "Jugar con amigos en línea".');
+    } else if (['network', 'server-error', 'socket-error', 'socket-closed'].includes(err.type)) ponerEstado('error');
   });
 }
 
-function irEnLinea(){
-  pintarEnLinea();
-  mostrar('enlinea');
-  if (progreso.nombre) conectarRed();
-}
-
+function irEnLinea(){ pintarEnLinea(); mostrar('enlinea'); if (progreso.nombre) conectarRed(); }
 function pintarEnLinea(){
   const tiene = !!progreso.nombre;
   $('tarjetaNombre').style.display = tiene ? 'none' : '';
@@ -604,30 +677,26 @@ function pintarEnLinea(){
   $('miCodigo').textContent = progreso.codigo;
   const lista = progreso.amigos;
   $('listaAmigos').innerHTML = lista.length ? lista.map((a, i) => `
-    <div class="amigo"><span class="mini">${SVG[VERDE]}</span>
+    <div class="amigo"><span style="font-size:1.8rem">🧒</span>
       <div class="info"><b>${esc(a.nombre || 'Amigo sin nombre')}</b><small>${esc(a.codigo)}</small></div>
       <button class="btn naranja" onclick="retar('${a.codigo}')">⚔️ Jugar</button>
       <button class="btn chico" onclick="quitarAmigo(${i})">✕</button></div>`).join('')
     : '<p class="nota">Todavía no tienes amigos agregados. ¡Invita a uno o escribe su código arriba!</p>';
 }
-
 function guardarNombre(){
   const n = $('inNombre').value.trim().replace(/\s+/g, ' ').slice(0, 12);
   if (!n) { aviso('Escribe un apodo'); return; }
   progreso.nombre = n; guardar(); pintarEnLinea(); conectarRed();
 }
 function cambiarNombre(){ $('inNombre').value = progreso.nombre || ''; progreso.nombre = ''; pintarEnLinea(); }
-
-function limpiarCodigo(s){ return String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^RANA/, '').slice(0, 6); }
-
+function limpiarCodigo(s){ return String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); }
 function guardarAmigo(codigo, nombre){
   codigo = limpiarCodigo(codigo);
   if (codigo.length !== 6 || codigo === progreso.codigo) return false;
   const nom = String(nombre || '').slice(0, 12);
   const ya = progreso.amigos.find(a => a.codigo === codigo);
   if (ya) { if (nom) ya.nombre = nom; } else progreso.amigos.push({ codigo, nombre:nom });
-  guardar(); pintarEnLinea();
-  return true;
+  guardar(); pintarEnLinea(); return true;
 }
 function agregarAmigoManual(){
   const c = limpiarCodigo($('inCodigo').value);
@@ -639,16 +708,15 @@ function agregarAmigoManual(){
 function quitarAmigo(i){
   const a = progreso.amigos[i];
   mostrarModal(`<h2>¿Quitar a ${esc(a.nombre || a.codigo)}?</h2><div class="botones">
-    <button class="btn naranja" onclick="progreso.amigos.splice(${i},1);guardar();pintarEnLinea();cerrarModal()">Sí, quitar</button>
+    <button class="btn rojo" onclick="progreso.amigos.splice(${i},1);guardar();pintarEnLinea();cerrarModal()">Sí, quitar</button>
     <button class="btn gris" onclick="cerrarModal()">No</button></div>`);
 }
-
 async function invitar(){
   const enWeb = location.protocol.startsWith('http');
   const url = enWeb ? `${location.origin}${location.pathname}?amigo=${progreso.codigo}&nombre=${encodeURIComponent(progreso.nombre)}` : '';
-  const texto = `¡Juega conmigo a Ranas al Ataque! 🐸 Mi código es ${progreso.codigo}.` + (url ? ` Entra aquí: ${url}` : '');
+  const texto = `¡Juega conmigo a Captura la Bandera! 🚩 Mi código es ${progreso.codigo}.` + (url ? ` Entra aquí: ${url}` : '');
   if (navigator.share) {
-    try { await navigator.share({ title:'Ranas al Ataque', text:texto }); return; }
+    try { await navigator.share({ title:'Captura la Bandera', text:texto }); return; }
     catch(e) { if (e.name === 'AbortError') return; }
   }
   try { await navigator.clipboard.writeText(texto); aviso('¡Invitación copiada! Pégala en WhatsApp 📋'); }
@@ -669,48 +737,51 @@ function retar(codigo){
   red.tEspera = setTimeout(() => fallaReto('Tu amigo no responde. Pídele que abra el juego y entre a "Jugar con amigos en línea".'), 15000);
   c.on('open', () => { saludar(); enviarReto(); });
 }
-
 function enviarReto(){
-  red.mapa = MAPAS_DUELO[Math.floor(Math.random() * MAPAS_DUELO.length)];
-  enviar({ tipo:'reto', mapa:red.mapa });
+  enviar({ tipo:'reto' });
   esperando(`Esperando a que ${esc(red.rival ? red.rival.nombre : 'tu amigo')} acepte…`);
   clearTimeout(red.tEspera);
   red.tEspera = setTimeout(() => fallaReto('Tu amigo no aceptó a tiempo. ¡Inténtalo de nuevo!'), 45000);
 }
-
 function esperando(txt){
-  mostrarModal(`<div class="mini">${SVG[VERDE]}</div><h2>⏳</h2><p>${txt}</p>
+  mostrarModal(`<div class="grande-emo">⏳</div><p>${txt}</p>
     <div class="botones"><button class="btn gris" onclick="cerrarConexion();cerrarModal()">Cancelar</button></div>`);
 }
 function fallaReto(txt){
   clearTimeout(red.tEspera); cerrarConexion();
-  mostrarModal(`<h2>😕</h2><p>${txt}</p><div class="botones"><button class="btn" onclick="cerrarModal()">Entendido</button></div>`);
+  mostrarModal(`<div class="grande-emo">😕</div><p>${txt}</p><div class="botones"><button class="btn" onclick="cerrarModal()">Entendido</button></div>`);
 }
-
 function recibirConexion(c){
-  if (red.conn && red.conn.open) {   // ya estoy jugando con alguien
+  if (red.conn && red.conn.open) {
     c.on('open', () => { try { c.send({ tipo:'ocupado' }); } catch(e){} setTimeout(() => c.close(), 800); });
     return;
   }
   prepararConexion(c);
   c.on('open', saludar);
 }
-
 function saludar(){ enviar({ tipo:'hola', nombre:progreso.nombre, codigo:progreso.codigo }); }
-
 function prepararConexion(c){
   red.conn = c;
   c.on('data', d => { if (red.conn === c) recibir(d); });
   c.on('close', () => {
     if (red.conn !== c) return;
     red.conn = null; clearTimeout(red.tEspera);
-    if (S.modo === 'online' && !S.terminado) {
-      S.terminado = true; dibujar();
-      mostrarModal(`<h2>📴</h2><p>${esc(red.rival ? red.rival.nombre : 'Tu amigo')} se desconectó.</p>
+    if (S.modo === 'online' && S.fase !== 'fin') {
+      S.fase = 'fin'; dibujar();
+      mostrarModal(`<div class="grande-emo">📴</div><p>${esc(red.rival ? red.rival.nombre : 'Tu amigo')} se desconectó.</p>
         <div class="botones"><button class="btn" onclick="salirAlMenu()">Menú</button></div>`);
     }
   });
   c.on('error', () => {});
+}
+
+// Revisa que el ejército del amigo sea válido (en su zona y con las piezas correctas)
+function ejercitoValido(lista, lado){
+  if (!Array.isArray(lista)) return false;
+  const z = new Set(zona(S.t, lado)), usados = new Set();
+  const esperado = S.cfg.ejercito.map(String).sort().join(), recibido = lista.map(p => String(p && p.tipo)).sort().join();
+  if (esperado !== recibido) return false;
+  return lista.every(p => z.has(p.i) && !usados.has(p.i) && usados.add(p.i));
 }
 
 function recibir(d){
@@ -718,51 +789,57 @@ function recibir(d){
   if (d.tipo === 'hola') {
     const cod = limpiarCodigo(d.codigo);
     red.rival = { codigo:cod, nombre:String(d.nombre || cod).slice(0, 12) };
-    guardarAmigo(cod, red.rival.nombre);   // se agregan como amigos automáticamente
+    guardarAmigo(cod, red.rival.nombre);
   } else if (d.tipo === 'reto') {
-    const mapa = MAPAS_DUELO.includes(d.mapa) ? d.mapa : MAPAS_DUELO[0];
     sonido('reto');
-    mostrarModal(`<div class="mini">${SVG[MORADO]}</div><h2>¡Te retan!</h2>
+    mostrarModal(`<div class="grande-emo">⚔️</div><h2>¡Te retan!</h2>
       <p><b>${esc(red.rival ? red.rival.nombre : 'Un amigo')}</b> quiere jugar contigo.</p>
-      <div class="botones"><button class="btn grande" style="width:100%" onclick="aceptarReto(${mapa})">⚔️ ¡Aceptar!</button>
+      <div class="botones"><button class="btn grande verde" style="width:100%" onclick="aceptarReto()">¡Aceptar!</button>
       <button class="btn gris" onclick="enviar({tipo:'rechaza'});cerrarModal();setTimeout(cerrarConexion,500)">Ahora no</button></div>`);
   } else if (d.tipo === 'acepta') {
     clearTimeout(red.tEspera); cerrarModal();
-    empezarOnline(red.mapa, VERDE);   // quien reta juega con las verdes y empieza
+    empezarOnline(AZUL);
   } else if (d.tipo === 'rechaza') {
     fallaReto(`${esc(red.rival ? red.rival.nombre : 'Tu amigo')} dijo "ahora no". ¡Prueba más tarde!`);
   } else if (d.tipo === 'ocupado') {
     fallaReto('Tu amigo está jugando otra partida. ¡Prueba en un rato!');
-  } else if (d.tipo === 'jugada') {
-    if (S.modo !== 'online' || S.terminado || S.turno === S.miColor) return;
-    const de = d.de | 0, a = d.a | 0, dist = distancia(S.t, de, a);
-    if (S.c[de] !== S.turno || S.c[a] !== VACIO || (dist !== 1 && dist !== 2)) return;  // jugada inválida
-    jugar({ de, a, salto:dist === 2 });
+  } else if (d.tipo === 'ejercito') {
+    if (S.modo !== 'online' || S.fase !== 'preparar') { red.pendiente = d.piezas; return; }
+    recibirEjercito(d.piezas);
+  } else if (d.tipo === 'mover') {
+    if (S.modo !== 'online' || S.fase !== 'jugar' || S.turno === S.vista || S.ocupado) return;
+    const de = d.de | 0, a = d.a | 0;
+    if (!movimientos(S.t, S.c, S.turno).some(m => m.de === de && m.a === a)) return;
+    hacerMovimiento({ de, a });
   }
 }
-
-function aceptarReto(mapa){
-  enviar({ tipo:'acepta' }); cerrarModal();
-  empezarOnline(mapa, MORADO);
+function recibirEjercito(piezas){
+  const lado = 3 - S.vista;
+  if (!ejercitoValido(piezas, lado)) return;
+  for (const i of zona(S.t, lado)) S.c[i] = null;
+  ponerEjercito(S.c, lado, piezas);
+  S.listo[lado] = true;
+  if (S.listo[S.vista]) comenzar(); else aviso('¡Tu amigo ya está listo! ⚔️');
 }
-
-function empezarOnline(mapa, miColor){
-  S.modo = 'online'; S.mapa = mapa; S.miColor = miColor;
+function aceptarReto(){ enviar({ tipo:'acepta' }); cerrarModal(); empezarOnline(ROJO); }
+function empezarOnline(miLado){
+  S.modo = 'online'; S.vista = miLado;
   const rival = red.rival ? red.rival.nombre : 'Amigo';
   $('titulo').textContent = '🌎 En línea';
-  $('nom1').textContent = miColor === VERDE ? 'Tú' : rival;
-  $('nom2').textContent = miColor === MORADO ? 'Tú' : rival;
-  prepararPartida(NIVELES[mapa].mapa);
-  aviso(miColor === VERDE ? 'Eres VERDE 🟢 ¡Empiezas tú!' : 'Eres MORADO 🟣 Empieza tu amigo', 3000);
+  $('nom1').textContent = miLado === AZUL ? 'Tú' : rival;
+  $('nom2').textContent = miLado === ROJO ? 'Tú' : rival;
+  nuevaPartida(TABLERO_DUELO);
+  ponerEjercito(S.c, miLado, colocar(S.t, miLado, TABLERO_DUELO.ejercito, false));
+  mostrar('juego'); dibujar();
+  if (red.pendiente) { const p = red.pendiente; red.pendiente = null; recibirEjercito(p); }
+  aviso(miLado === AZUL ? 'Eres AZUL 🔵 Acomoda tu ejército' : 'Eres ROJO 🔴 Acomoda tu ejército', 3000);
 }
-
 function pedirRevancha(){
   if (!red.conn || !red.conn.open) { fallaReto('Tu amigo ya no está conectado.'); return; }
-  enviarReto();
+  red.pendiente = null; enviarReto();
 }
 
 // ================= INICIO =================
-$('logo').innerHTML = SVG[VERDE];
 pintarSonido();
 (function revisarInvitacion(){
   try {
@@ -775,7 +852,7 @@ pintarSonido();
     }
   } catch(e){}
 })();
-if (progreso.nombre && navigator.onLine !== false) conectarRed();   // así tus amigos te encuentran
+if (progreso.nombre && navigator.onLine !== false) conectarRed();
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>

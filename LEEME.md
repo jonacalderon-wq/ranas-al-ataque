@@ -1,33 +1,31 @@
-# 🐸 Ranas al Ataque
+# 🚩 Captura la Bandera
 
-Juego de estrategia para niños de 8 años en adelante. Las ranas verdes deben recuperar el estanque de los sapos morados: copias o saltas ranas, y los sapos que quedan junto a ellas cambian de color.
+Juego de estrategia para niños de 8 años en adelante. Cada jugador tiene un ejército de animales y una bandera escondida. Gana quien capture la bandera del rival.
+
+## Reglas
+- Mueves un animal una casilla por turno (adelante, atrás o a los lados). No se puede pisar el agua 🌊.
+- Los animales del rival están escondidos hasta que pelean.
+- Si chocan, gana el número más grande: 🐭1 🐱2 🐶3 🐺4 🐻5 🦁6. Si son iguales, salen los dos.
+- La 💣 trampa vence a todos menos al 🐭 Ratón. La 🚩 y las 💣 no se mueven.
+- Antes de atacar, el tablero avisa: verde = ganas, rojo = pierdes, amarillo = no se sabe.
 
 ## Modos
-- **Aventura**: 12 niveles con dificultad creciente, estrellas y pistas. Del nivel 7 en adelante la computadora piensa varias jugadas adelante.
-- **Jugar con amigos en línea**: cada jugador tiene un código de 6 letras. Lo compartes con "Invitar a un amigo" (WhatsApp, etc.), tu amigo te agrega y se pueden retar. Al jugar una vez, quedan agregados como amigos los dos.
-- **Duelo**: dos jugadores en el mismo teléfono.
+- **Aventura**: 7 niveles que enseñan las reglas poco a poco (primero sin trampas, luego con lagos, etc.), con rivales cada vez más listos y estrellas.
+- **Amigos en línea**: cada jugador tiene un código de 6 letras. Se comparte con "Invitar a un amigo", se agregan y se retan.
+- **Dos jugadores, un teléfono**: se pasan el teléfono por turnos y una pantalla tapa el tablero para que el otro no vea.
 
 ## Archivos
-- `index.html`: el juego (pantallas, dibujos, sonidos y modo en línea)
-- `logica.js`: las reglas y la inteligencia de la computadora
+- `index.html`: pantallas, dibujos, sonidos y modo en línea
+- `logica.js`: reglas y la inteligencia de la computadora
 - `manifest.webmanifest`, `sw.js`, `icon-*.png`: lo necesario para instalarlo como app
 
 ## Probarlo en la computadora
-Haz doble clic en `index.html`. Todo funciona, menos el modo en línea y la instalación, que necesitan que el juego esté publicado en internet.
+Doble clic en `index.html`. Todo funciona menos el modo en línea y la instalación, que necesitan que esté publicado en internet.
 
-## Instalarlo en Android
-1. Publica esta carpeta en internet con HTTPS. Las opciones gratis más fáciles son:
-   - **Netlify Drop** (app.netlify.com/drop): arrastra la carpeta `Juego` y te da un enlace.
-   - **GitHub Pages**: sube la carpeta a un repositorio y activa Pages en Settings → Pages.
-2. En el teléfono, abre el enlace con **Chrome** → menú ⋮ → **Instalar aplicación** (o "Agregar a pantalla principal").
-3. Queda un ícono como cualquier app. La aventura y el duelo funcionan también sin internet.
+## Publicarlo e instalarlo en Android
+1. Copia estos archivos a la carpeta del repositorio de GitHub Pages, haz Commit y Push en GitHub Desktop.
+2. Abre el enlace de GitHub Pages en Chrome en el teléfono → menú ⋮ → **Instalar aplicación**.
+3. Para un APK o Google Play: pega el enlace en **pwabuilder.com** y elige Android.
 
-## Si quieres un archivo APK o publicarlo en Google Play
-Con el enlace del paso 1, entra a **pwabuilder.com**, pega el enlace y elige *Android*. Genera el paquete para instalar o subir a Play Store.
-
-## Cómo funciona el modo en línea
-Los teléfonos se conectan directamente entre sí con PeerJS (usa su servidor público gratuito solo para encontrarse). No hace falta montar un servidor propio. Ten en cuenta que:
-- Los dos tienen que tener el juego abierto y con internet al mismo tiempo.
-- El servidor público de PeerJS es gratis y no tiene garantía. Si algún día falla, se puede cambiar por uno propio.
-- En algunas redes muy cerradas (escuelas, ciertas compañías móviles) la conexión directa puede fallar.
-- No hay chat ni búsqueda de desconocidos: solo se juega con quien tenga tu código.
+## Sobre el modo en línea
+Los teléfonos se conectan directamente con PeerJS (servidor público gratuito, sin garantía). Ambos deben tener el juego abierto y con internet. En redes muy cerradas la conexión puede fallar. No hay chat ni búsqueda de desconocidos.

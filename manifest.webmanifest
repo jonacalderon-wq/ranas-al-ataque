@@ -1,13 +1,13 @@
 {
-  "name": "Ranas al Ataque",
-  "short_name": "Ranas",
-  "description": "Juego de estrategia para niños: conquista el estanque.",
+  "name": "Captura la Bandera",
+  "short_name": "Bandera",
+  "description": "Juego de estrategia para niños: esconde tu bandera y captura la del rival.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0e5a6b",
-  "theme_color": "#1b7a4a",
+  "background_color": "#2b6b3a",
+  "theme_color": "#2b6b3a",
   "lang": "es",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
